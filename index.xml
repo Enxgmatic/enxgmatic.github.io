@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>enxgmatic&#39;s hidey hole</title>
+    <link>https://enxgmatic.github.io/</link>
+    <description>Recent content on enxgmatic&#39;s hidey hole</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>enxgmatic</copyright>
+    <lastBuildDate>Sun, 03 Mar 2024 17:37:08 +0800</lastBuildDate>
+    <atom:link href="https://enxgmatic.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pwntools Cheatsheet</title>
+      <link>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</link>
+      <pubDate>Sun, 03 Mar 2024 17:37:08 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</guid>
+      <description>This is a very brief cheatsheet and introduction to pwntools for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.&#xA;Install and Import pip install pwntools: to install pwntools, use this command in the terminal&#xA;from pwn import *: put this at the top of your python file to import pwntools.&#xA;Making connections r = remote(HOST, PORT): connects to a remote connection, with the relevant host and port</description>
+    </item>
+    <item>
+      <title>Hack@AC 2024</title>
+      <link>https://enxgmatic.github.io/ctf/hack@ac/</link>
+      <pubDate>Thu, 29 Feb 2024 17:43:43 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/ctf/hack@ac/</guid>
+      <description>Hack@AC 2024 I took part in Hack@AC 2024 with the team ඞඞඞඞ. We attained 4th place in the tertiary category, having the same score as 3rd place, simply submitting the last flag later than them :(&#xA;Additionally, I won the first blood prize for solving the challenge web/Libwary.&#xA;🩸 web/Fruit Color Query One of the more interesting sql injection challenges.&#xA;Reconnaissance Going to the website and using the sample apple picture provided, it seems that it outputs the colour of the fruit.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://enxgmatic.github.io/about/</link>
+      <pubDate>Sat, 10 Feb 2024 17:57:28 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/about/</guid>
+      <description>Hi, I&amp;rsquo;m enxgmatic, a Singaporean student trying to get better at cybersecurity and life.</description>
+    </item>
+  </channel>
+</rss>

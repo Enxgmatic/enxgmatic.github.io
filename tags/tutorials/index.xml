@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tutorials on enxgmatic&#39;s hidey hole</title>
+    <link>https://enxgmatic.github.io/tags/tutorials/</link>
+    <description>Recent content in tutorials on enxgmatic&#39;s hidey hole</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>enxgmatic</copyright>
+    <lastBuildDate>Sun, 03 Mar 2024 17:37:08 +0800</lastBuildDate>
+    <atom:link href="https://enxgmatic.github.io/tags/tutorials/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pwntools Cheatsheet</title>
+      <link>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</link>
+      <pubDate>Sun, 03 Mar 2024 17:37:08 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</guid>
+      <description>This is a very brief cheatsheet and introduction to pwntools for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.&#xA;Install and Import pip install pwntools: to install pwntools, use this command in the terminal&#xA;from pwn import *: put this at the top of your python file to import pwntools.&#xA;Making connections r = remote(HOST, PORT): connects to a remote connection, with the relevant host and port</description>
+    </item>
+  </channel>
+</rss>
