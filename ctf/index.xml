@@ -10,6 +10,19 @@
         <atom:link href="https://enxgmatic.github.io/ctf/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
+            <title>Secret Keyword</title>
+            <link>https://enxgmatic.github.io/ctf/secret-keyword/</link>
+            <pubDate>Tue, 19 Mar 2024 22:51:27 +0800</pubDate>
+            
+            <guid>https://enxgmatic.github.io/ctf/secret-keyword/</guid>
+            <description>Huehuehue, here&amp;rsquo;s the second part of the secret keyword:
+MILK</description>
+            <content type="html"><![CDATA[<p>Huehuehue, here&rsquo;s the second part of the secret keyword:</p>
+<p><code>MILK</code></p>
+]]></content>
+        </item>
+        
+        <item>
             <title>Pwntools Cheatsheet</title>
             <link>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</link>
             <pubDate>Sun, 03 Mar 2024 17:37:08 +0800</pubDate>
