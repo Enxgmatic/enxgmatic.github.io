@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>enxgmatic</copyright>
-    <lastBuildDate>Tue, 19 Mar 2024 22:51:27 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 31 Mar 2024 17:43:43 +0800</lastBuildDate>
     <atom:link href="https://enxgmatic.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]</title>
+      <link>https://enxgmatic.github.io/ctf/whitehacks/</link>
+      <pubDate>Sun, 31 Mar 2024 17:43:43 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/ctf/whitehacks/</guid>
+      <description>Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup] Description Solves: 2&#xA;To deal with the overwhelming demand for the recent Swiftie concert, a waitlist system was enacted to handle the overcapacity problem. However, it&amp;rsquo;s been made aware that the program was vulnerable, and some fanatic fans have even exploited it to skip the waitlist entirely. Just how did they do it?&#xA;By GovTech&#xA;nc ctf2.whitehats.site 2005&#xA;Initial Analysis $ ./checksec waitlist Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled ------ $ .</description>
+    </item>
     <item>
       <title>Secret Keyword</title>
       <link>https://enxgmatic.github.io/ctf/secret-keyword/</link>

