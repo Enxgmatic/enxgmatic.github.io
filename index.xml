@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>enxgmatic</copyright>
-    <lastBuildDate>Sun, 31 Mar 2024 17:43:43 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 12 May 2024 22:50:19 +0800</lastBuildDate>
     <atom:link href="https://enxgmatic.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Grey Cat The Flag Quals 2024</title>
+      <link>https://enxgmatic.github.io/ctf/gctf-quals24/</link>
+      <pubDate>Sun, 12 May 2024 22:50:19 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/ctf/gctf-quals24/</guid>
+      <description>Slingring Factory Category: Pwn&#xA;In following Greycat&amp;rsquo;s adventures, you have stumbled upon a factory that produces weirdly-shaped rings. Upon closer inspection, you realise that the rings seem very familiar &amp;ndash; they looked exactly like the Sling Rings you saw from the Marvel Comics universe! Having some time leftover, you decide to explore the factory. Alas, you eventually come to realise that these Sling Rings were in fact not the same as those you knew: during forging, their destinations have to already be set.</description>
+    </item>
     <item>
       <title>Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]</title>
       <link>https://enxgmatic.github.io/ctf/whitehacks/</link>

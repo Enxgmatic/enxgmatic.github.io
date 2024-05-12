@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>untagged on enxgmatic&#39;s hidey hole</title>
+    <link>https://enxgmatic.github.io/tags/untagged/</link>
+    <description>Recent content in untagged on enxgmatic&#39;s hidey hole</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>enxgmatic</copyright>
+    <lastBuildDate>Sun, 12 May 2024 22:50:19 +0800</lastBuildDate>
+    <atom:link href="https://enxgmatic.github.io/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Grey Cat The Flag Quals 2024</title>
+      <link>https://enxgmatic.github.io/ctf/gctf-quals24/</link>
+      <pubDate>Sun, 12 May 2024 22:50:19 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/ctf/gctf-quals24/</guid>
+      <description>Slingring Factory Category: Pwn&#xA;In following Greycat&amp;rsquo;s adventures, you have stumbled upon a factory that produces weirdly-shaped rings. Upon closer inspection, you realise that the rings seem very familiar &amp;ndash; they looked exactly like the Sling Rings you saw from the Marvel Comics universe! Having some time leftover, you decide to explore the factory. Alas, you eventually come to realise that these Sling Rings were in fact not the same as those you knew: during forging, their destinations have to already be set.</description>
+    </item>
+  </channel>
+</rss>
