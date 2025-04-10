@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tutorials on enxgmatic&#39;s hidey hole</title>
+    <title>Tutorials on enxgmatic&#39;s hidey hole</title>
     <link>https://enxgmatic.github.io/tags/tutorials/</link>
-    <description>Recent content in tutorials on enxgmatic&#39;s hidey hole</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Tutorials on enxgmatic&#39;s hidey hole</description>
+    <generator>Hugo</generator>
     <language>en-gb</language>
     <copyright>enxgmatic</copyright>
     <lastBuildDate>Sun, 03 Mar 2024 17:37:08 +0800</lastBuildDate>
     <atom:link href="https://enxgmatic.github.io/tags/tutorials/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pwntools Cheatsheet</title>
-      <link>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</link>
+      <link>https://enxgmatic.github.io/blog/pwntools-cheatsheet/</link>
       <pubDate>Sun, 03 Mar 2024 17:37:08 +0800</pubDate>
-      <guid>https://enxgmatic.github.io/ctf/pwntools-cheatsheet/</guid>
-      <description>This is a very brief cheatsheet and introduction to pwntools for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.&#xA;Install and Import pip install pwntools: to install pwntools, use this command in the terminal&#xA;from pwn import *: put this at the top of your python file to import pwntools.&#xA;Making connections r = remote(HOST, PORT): connects to a remote connection, with the relevant host and port</description>
+      <guid>https://enxgmatic.github.io/blog/pwntools-cheatsheet/</guid>
+      <description>&lt;p&gt;This is a very brief cheatsheet and introduction to &lt;code&gt;pwntools&lt;/code&gt; for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.&lt;/p&gt;&#xA;&lt;br&gt;&#xA;&lt;h3 id=&#34;install-and-import&#34;&gt;Install and Import&lt;/h3&gt;&#xA;&lt;p&gt;&lt;code&gt;pip install pwntools&lt;/code&gt;: to install pwntools, use this command in the terminal&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;from pwn import *&lt;/code&gt;: put this at the top of your python file to import pwntools.&lt;/p&gt;&#xA;&lt;br&gt;&#xA;&lt;h3 id=&#34;making-connections&#34;&gt;Making connections&lt;/h3&gt;&#xA;&lt;p&gt;&lt;code&gt;r = remote(HOST, PORT)&lt;/code&gt;: connects to a remote connection, with the relevant host and port&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

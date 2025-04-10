@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on enxgmatic&#39;s hidey hole</title>
+    <link>https://enxgmatic.github.io/tags/web/</link>
+    <description>Recent content in Web on enxgmatic&#39;s hidey hole</description>
+    <generator>Hugo</generator>
+    <language>en-gb</language>
+    <copyright>enxgmatic</copyright>
+    <lastBuildDate>Thu, 29 Feb 2024 17:43:43 +0800</lastBuildDate>
+    <atom:link href="https://enxgmatic.github.io/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hack@AC 2024</title>
+      <link>https://enxgmatic.github.io/blog/hack@ac/</link>
+      <pubDate>Thu, 29 Feb 2024 17:43:43 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/blog/hack@ac/</guid>
+      <description>&lt;h1 id=&#34;hackac-2024&#34;&gt;Hack@AC 2024&lt;/h1&gt;&#xA;&lt;p&gt;I took part in Hack@AC 2024 with the team ඞඞඞඞ. We attained 4th place in the tertiary category, having the same score as 3rd place, simply submitting the last flag later than them :(&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;assets/leaderboard.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Additionally, I won the first blood prize for solving the challenge &lt;a href=&#34;#weblibwary&#34;&gt;&lt;code&gt;web/Libwary&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h2 id=&#34;-webfruit-color-query&#34;&gt;🩸 web/Fruit Color Query&lt;/h2&gt;&#xA;&lt;p&gt;One of the more interesting sql injection challenges.&lt;/p&gt;&#xA;&lt;h3 id=&#34;reconnaissance&#34;&gt;Reconnaissance&lt;/h3&gt;&#xA;&lt;p&gt;Going to the website and using the sample apple picture provided, it seems that it outputs the colour of the fruit.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

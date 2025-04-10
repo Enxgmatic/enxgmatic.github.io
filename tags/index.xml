@@ -4,23 +4,37 @@
     <title>Tags on enxgmatic&#39;s hidey hole</title>
     <link>https://enxgmatic.github.io/tags/</link>
     <description>Recent content in Tags on enxgmatic&#39;s hidey hole</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-gb</language>
     <copyright>enxgmatic</copyright>
-    <lastBuildDate>Sun, 12 May 2024 22:50:19 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 10 Apr 2025 22:09:48 +0800</lastBuildDate>
     <atom:link href="https://enxgmatic.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>untagged</title>
-      <link>https://enxgmatic.github.io/tags/untagged/</link>
-      <pubDate>Sun, 12 May 2024 22:50:19 +0800</pubDate>
-      <guid>https://enxgmatic.github.io/tags/untagged/</guid>
+      <title>Ctf</title>
+      <link>https://enxgmatic.github.io/tags/ctf/</link>
+      <pubDate>Thu, 10 Apr 2025 22:09:48 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/tags/ctf/</guid>
       <description></description>
     </item>
     <item>
-      <title>tutorials</title>
+      <title>Pwn</title>
+      <link>https://enxgmatic.github.io/tags/pwn/</link>
+      <pubDate>Thu, 10 Apr 2025 22:09:48 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/tags/pwn/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tutorials</title>
       <link>https://enxgmatic.github.io/tags/tutorials/</link>
       <pubDate>Sun, 03 Mar 2024 17:37:08 +0800</pubDate>
       <guid>https://enxgmatic.github.io/tags/tutorials/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web</title>
+      <link>https://enxgmatic.github.io/tags/web/</link>
+      <pubDate>Thu, 29 Feb 2024 17:43:43 +0800</pubDate>
+      <guid>https://enxgmatic.github.io/tags/web/</guid>
       <description></description>
     </item>
   </channel>

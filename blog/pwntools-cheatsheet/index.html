@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="This is a very brief cheatsheet and introduction to pwntools for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.
+Install and Import pip install pwntools: to install pwntools, use this command in the terminal
+from pwn import *: put this at the top of your python file to import pwntools.
+Making connections r = remote(HOST, PORT): connects to a remote connection, with the relevant host and port
+" />
+<meta name="keywords" content=", tutorials, pwn" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#494f5c" />
+<link rel="canonical" href="https://enxgmatic.github.io/blog/pwntools-cheatsheet/" />
+
+
+    <title>
+        
+            Pwntools Cheatsheet - enxgmatic&#39;s hidey hole 
+        
+    </title>
+
+
+
+
+
+<link rel="stylesheet" href="/main.5fcad444a7849ba937342f254165b4c1cd5a34a191cd61d23fe4623b1f3a5452.css" integrity="sha256-X8rURKeEm6k3NC8lQWW0wc1aNKGRzWHSP&#43;RiOx86VFI=">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Pwntools Cheatsheet">
+  <meta itemprop="description" content="This is a very brief cheatsheet and introduction to pwntools for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.
+Install and Import pip install pwntools: to install pwntools, use this command in the terminal
+from pwn import *: put this at the top of your python file to import pwntools.
+Making connections r = remote(HOST, PORT): connects to a remote connection, with the relevant host and port">
+  <meta itemprop="datePublished" content="2024-03-03T17:37:08+08:00">
+  <meta itemprop="dateModified" content="2024-03-03T17:37:08+08:00">
+  <meta itemprop="wordCount" content="444">
+  <meta itemprop="keywords" content="Tutorials,Pwn">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pwntools Cheatsheet">
+  <meta name="twitter:description" content="This is a very brief cheatsheet and introduction to pwntools for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.
+Install and Import pip install pwntools: to install pwntools, use this command in the terminal
+from pwn import *: put this at the top of your python file to import pwntools.
+Making connections r = remote(HOST, PORT): connects to a remote connection, with the relevant host and port">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-03-03 17:37:08 &#43;0800 &#43;08" />
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">~</span>
+            <span class="logo__text ">
+                $ ./enxgmatic</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title" style="margin-bottom:6px">
+        <a href="https://enxgmatic.github.io/blog/pwntools-cheatsheet/">Pwntools Cheatsheet</a>
+      </h1>
+
+      
+
+      <div class="post-info" style="margin-top:6px">
+        
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/tutorials/">tutorials</a></span>
+        <span class="tag"><a href="https://enxgmatic.github.io/tags/pwn/">pwn</a></span>
+        
+    </p>
+
+        
+        
+        
+  
+        <p>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          
+            2024-03-03 17:37 &#43;0800
+          
+  
+           
+            
+          
+        </p>
+
+        <br>
+      </div>
+
+      
+
+      
+
+      <div class="post-content">
+        <p>This is a very brief cheatsheet and introduction to <code>pwntools</code> for CTFs. I am writing this specifically for Sieberrsec CTF 5.0, but it can be applied for all CTFs.</p>
+<br>
+<h3 id="install-and-import">Install and Import</h3>
+<p><code>pip install pwntools</code>: to install pwntools, use this command in the terminal</p>
+<p><code>from pwn import *</code>: put this at the top of your python file to import pwntools.</p>
+<br>
+<h3 id="making-connections">Making connections</h3>
+<p><code>r = remote(HOST, PORT)</code>: connects to a remote connection, with the relevant host and port</p>
+<ul>
+<li>Eg if the CTF tells you to connect to the instance via <code>nc 1.1.1.1 2000</code>, <code>1.1.1.1</code> is the host, and <code>2000</code> is the port</li>
+<li>This command is in effect the same as <code>nc</code></li>
+</ul>
+<p><code>r.interactive()</code>: allows you to interact with the process yourself</p>
+<ul>
+<li>We usually use this at the very end after we have obtained the shell or when the flag is printed out</li>
+</ul>
+<br>
+<h3 id="elf-manipulation">ELF manipulation</h3>
+<p>CTF challenges usually provide an ELF file for you to run. An ELF file is essentially the linux version of an <code>.exe</code> file.</p>
+<br>
+<p><code>elf = ELF('./NAME')</code>: this allows you to get information about an ELF file of the specified name</p>
+<p><code>r = elf.process(stdin=PTY)</code>: this executes the ELF file</p>
+<ul>
+<li>Usually we use this to test the challenge locally</li>
+<li>Then switch to <code>remote(HOST,PORT)</code> to connect to the remote instance</li>
+</ul>
+<p><code>elf.symbols['FUNCTION']</code>: gets the address of the specified function</p>
+<ul>
+<li>Eg <code>elf.symbols['main']</code> gives the address of main()</li>
+</ul>
+<br>
+<h3 id="reading-data-and-providing-input">Reading data and providing input</h3>
+<p><code>conn.recvline()</code>: reads one line of data</p>
+<p><code>conn.recvlines(N)</code>: reads N lines of data</p>
+<p><code>conn.recvuntil(VALUE)</code>: reads data until VALUE</p>
+<p><code>conn.sendline(VALUE)</code>: sends an input of VALUE</p>
+<br>
+<h3 id="further-readings">Further readings</h3>
+<p>These commands are left as an exercise to the reader to learn more about. For more commands, refer to their <a href="https://docs.pwntools.com/en/stable/">documentation</a>.</p>
+<p><code>p64(NUMBER)</code> and <code>p32(NUMBER)</code>: struct unpacking</p>
+<p><code>elf.got['write']</code>,<code>elf.plt['write']</code>: get the GOT and PLT addresses</p>
+<br>
+<h3 id="sample">Sample</h3>
+<p>Imagine that you are provided with a file which does this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">n1</span> <span class="o">=</span> <span class="nf">rand</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">input</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// prints &#34;n1: xx&#34; where xx is the number randomly generated
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;n1: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">n1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">puts</span><span class="p">(</span><span class="s">&#34;What is the value of n1?&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// gets an integer input
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">scanf</span><span class="p">(</span><span class="s">&#34;d&#34;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// get the flag if input is equal to n1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">==</span> <span class="n">n1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">print_flag</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>So, the file will print the value of n1, and then you will need to input n1 back.</p>
+<p>This is how you can use pwntools to solve the challenge:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&#34;./challenge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">local</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">local</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># execute the local file</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># connect to the remote instance</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s2">&#34;challs.sieberr.live&#34;</span><span class="p">,</span> <span class="mi">1337</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># get the value of n1</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;n1: &#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">n1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># input n1</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># interact with the process yourself, so you can see the value of the flag</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></span></code></pre></div>
+      </div>
+      <br>
+    </article>
+
+    <hr />
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="https://enxgmatic.github.io/blog/whitehacks/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">Whitehacks 2024 - The Swiftie Waitlist [Pwn Writeup]</span>
+                </a>
+            </span>
+            
+
+            
+            <span class="button next">
+                <a href="https://enxgmatic.github.io/blog/hack@ac/">
+                    <span class="button__text">Hack@AC 2024</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    <div id="comments" class="thin"></div>
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer id="site-footer" class="section-inner thin animated fadeIn faster footer">
+	<p>
+		&copy; 2025 enxgmatic
+		
+		&#183; Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>
+		&#183; Theme <a href="https://github.com/1bl4z3r/hermit-V2" target="_blank" rel="noopener">Hello Friend NG</a>
+		
+		
+		
+	</p>
+
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.5dec718db360369f6c53d6a74eb9396d4a6ae9407b4857a7d7a02fc1a475bc7264af31658e86eeef5799dacd109c6b4bcae61c64772423ae9ef2ee502bf8d8ec.js" integrity="sha512-XexxjbNgNp9sU9anTrk5bUpq6UB7SFen16AvwaR1vHJkrzFljobu71eZ2s0QnGtLyuYcZHckI66e8u5QK/jY7A=="></script>
+
+
+
+
+    </body>
+</html>
