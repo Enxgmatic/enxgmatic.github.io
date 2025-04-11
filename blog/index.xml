@@ -21,7 +21,21 @@
 &lt;li&gt;&lt;code&gt;pwn/Magicvault&lt;/code&gt;: unlink exploit in a unique context&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;pwnfswn3d&#34;&gt;pwn/Fswn3d&lt;/h2&gt;
-&lt;h3 id=&#34;analysis---win&#34;&gt;Analysis - win()&lt;/h3&gt;
+&lt;h3 id=&#34;analysis&#34;&gt;Analysis&lt;/h3&gt;
+
+
+
+    &lt;blockquote class=&#34;alert alert-tip&#34;&gt;
+        &lt;p class=&#34;alert-heading&#34;&gt;
+            💡
+            &lt;b&gt;
+                
+                    Files given
+                
+            &lt;/b&gt;
+        &lt;/p&gt;
+        &lt;p&gt;&lt;a href=&#34;fswn3d/main&#34;&gt;main&lt;/a&gt;, &lt;a href=&#34;fswn3d/main.c&#34;&gt;main.c&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;*&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;/home/ctfplayer/breachers/fswn3d/main&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Arch:     amd64-64-little
@@ -29,14 +43,29 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Stack:    Canary found
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NX:       NX enabled
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    PIE:      PIE enabled
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Looking at the source, we are given a win function.&lt;/p&gt;</description>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;analysis---win&#34;&gt;Analysis - win()&lt;/h3&gt;
+&lt;p&gt;Looking at the source, we are given a win function.&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:</p>
 <ul>
 <li><code>pwn/Fswn3d</code>: format string and fexecve</li>
 <li><code>pwn/Magicvault</code>: unlink exploit in a unique context</li>
 </ul>
 <h2 id="pwnfswn3d">pwn/Fswn3d</h2>
-<h3 id="analysis---win">Analysis - win()</h3>
+<h3 id="analysis">Analysis</h3>
+
+
+
+    <blockquote class="alert alert-tip">
+        <p class="alert-heading">
+            💡
+            <b>
+                
+                    Files given
+                
+            </b>
+        </p>
+        <p><a href="fswn3d/main">main</a>, <a href="fswn3d/main.c">main.c</a></p>
+    </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/home/ctfplayer/breachers/fswn3d/main&#39;</span>
 </span></span><span class="line"><span class="cl">    Arch:     amd64-64-little
@@ -44,7 +73,8 @@
 </span></span><span class="line"><span class="cl">    Stack:    Canary found
 </span></span><span class="line"><span class="cl">    NX:       NX enabled
 </span></span><span class="line"><span class="cl">    PIE:      PIE enabled
-</span></span></code></pre></div><p>Looking at the source, we are given a win function.</p>
+</span></span></code></pre></div><h3 id="analysis---win">Analysis - win()</h3>
+<p>Looking at the source, we are given a win function.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">152</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">win</span><span class="p">()</span> <span class="p">{</span>
@@ -273,17 +303,30 @@ When you run such a file using the command <code>./script-name-here.sh</code>, i
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </span></span></code></pre></div><p>Flag: <code>Breach{5h0uldv3_l1573n3d_70_7h3_6cc_w4rn1n65}</code></p>
 <h2 id="pwnmagicvault">pwn/MagicVault</h2>
-<p>I quite enjoy this challenge, for while it is conceptually simple, it was well disguised within a unique context compared to a typical CRUD binary.</p>
-<h3 id="analysis">Analysis</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/magicvault$ checksec main
+<p>I quite enjoyed this challenge, for while it is conceptually simple, it was well disguised within a unique context compared to a typical CRUD binary.</p>
+<h3 id="analysis-1">Analysis</h3>
+
+
+
+    <blockquote class="alert alert-tip">
+        <p class="alert-heading">
+            💡
+            <b>
+                
+                    Files given
+                
+            </b>
+        </p>
+        <p><a href="magicvault/main">main</a>, <a href="magicvault/main.c">main.c</a>, <a href="magicvault/magic_buddy.c">magic_buddy.c</a>, <a href="magicvault/magic_buddy.h">magic_buddy.h</a></p>
+    </blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/magicvault$ checksec main
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/home/ctfplayer/breachers/magicvault/main&#39;</span>
 </span></span><span class="line"><span class="cl">    Arch:     amd64-64-little
 </span></span><span class="line"><span class="cl">    RELRO:    Partial RELRO
 </span></span><span class="line"><span class="cl">    Stack:    Canary found
 </span></span><span class="line"><span class="cl">    NX:       NX enabled
 </span></span><span class="line"><span class="cl">    PIE:      No PIE <span class="o">(</span>0x400000<span class="o">)</span>
-</span></span></code></pre></div><p>Apart from the binary, we are given 3 files: <code>magic_buddy.c</code>, <code>magic_buddy.h</code> and <code>main.c</code>.</p>
-<h3 id="analysis---magic_buddy">Analysis - magic_buddy</h3>
+</span></span></code></pre></div><h3 id="analysis---magic_buddy">Analysis - magic_buddy</h3>
 <p><code>magic_buddy</code> is an implementation of the buddy memory allocation system. It splits memory into halves to determine the best fit i.e. it uses the memory block size 2<sup>m</sup> which satisfies 2<sup>m-1</sup> &lt; requested size &lt;= 2<sup>m</sup>.</p>
 <p>No deep knowledge about the buddy system is actually needed, and most of the code in it is irrelevant to the exploit.</p>
 <p>To give a brief overview, <code>init_buddy</code> initialises the buddy memory allocator, which is of the following struct. It includes an array of pointers to freed blocks (<code>avail</code>), the starting memory address where blocks will be allocated to (<code>base</code>), and its largest block size (<code>root_logsize</code>).</p>

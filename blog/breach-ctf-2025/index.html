@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="">
 <meta name="description" content="Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:
-pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis - win() ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Looking at the source, we are given a win function.
+pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis 💡 Files given main, main.c
+ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Analysis - win() Looking at the source, we are given a win function.
 " />
 <meta name="keywords" content=", ctf, pwn" />
 <meta name="robots" content="noodp" />
@@ -40,7 +41,8 @@ pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique
 
   <meta itemprop="name" content="Breach CTF 2025 pwn writeups">
   <meta itemprop="description" content="Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:
-pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis - win() ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Looking at the source, we are given a win function.">
+pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis 💡 Files given main, main.c
+ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Analysis - win() Looking at the source, we are given a win function.">
   <meta itemprop="datePublished" content="2025-04-10T22:09:48+08:00">
   <meta itemprop="dateModified" content="2025-04-10T22:09:48+08:00">
   <meta itemprop="wordCount" content="2333">
@@ -49,7 +51,8 @@ pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Breach CTF 2025 pwn writeups">
   <meta name="twitter:description" content="Last weekend, I took part in Breach CTF individually and got 10th place. The pwn challenges were pretty chill, so here are some writeups:
-pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis - win() ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Looking at the source, we are given a win function.">
+pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique context pwn/Fswn3d Analysis 💡 Files given main, main.c
+ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main [*] &#39;/home/ctfplayer/breachers/fswn3d/main&#39; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE enabled Analysis - win() Looking at the source, we are given a win function.">
 
 
 
@@ -171,6 +174,7 @@ pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique
   <ul>
     <li><a href="#pwnfswn3d">pwn/Fswn3d</a>
       <ul>
+        <li><a href="#analysis">Analysis</a></li>
         <li><a href="#analysis---win">Analysis - win()</a></li>
         <li><a href="#analysis---main-and-vuln">Analysis - main() and vuln()</a></li>
         <li><a href="#exploit">Exploit</a></li>
@@ -178,7 +182,7 @@ pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique
     </li>
     <li><a href="#pwnmagicvault">pwn/MagicVault</a>
       <ul>
-        <li><a href="#analysis">Analysis</a></li>
+        <li><a href="#analysis-1">Analysis</a></li>
         <li><a href="#analysis---magic_buddy">Analysis - magic_buddy</a></li>
         <li><a href="#analysis---main">Analysis - main</a></li>
         <li><a href="#exploit-1">Exploit</a></li>
@@ -198,7 +202,21 @@ pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique
 <li><code>pwn/Magicvault</code>: unlink exploit in a unique context</li>
 </ul>
 <h2 id="pwnfswn3d">pwn/Fswn3d</h2>
-<h3 id="analysis---win">Analysis - win()</h3>
+<h3 id="analysis">Analysis</h3>
+
+
+
+    <blockquote class="alert alert-tip">
+        <p class="alert-heading">
+            💡
+            <b>
+                
+                    Files given
+                
+            </b>
+        </p>
+        <p><a href="fswn3d/main">main</a>, <a href="fswn3d/main.c">main.c</a></p>
+    </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/fswn3d$ checksec main
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/home/ctfplayer/breachers/fswn3d/main&#39;</span>
 </span></span><span class="line"><span class="cl">    Arch:     amd64-64-little
@@ -206,7 +224,8 @@ pwn/Fswn3d: format string and fexecve pwn/Magicvault: unlink exploit in a unique
 </span></span><span class="line"><span class="cl">    Stack:    Canary found
 </span></span><span class="line"><span class="cl">    NX:       NX enabled
 </span></span><span class="line"><span class="cl">    PIE:      PIE enabled
-</span></span></code></pre></div><p>Looking at the source, we are given a win function.</p>
+</span></span></code></pre></div><h3 id="analysis---win">Analysis - win()</h3>
+<p>Looking at the source, we are given a win function.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">152</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">win</span><span class="p">()</span> <span class="p">{</span>
@@ -435,17 +454,30 @@ When you run such a file using the command <code>./script-name-here.sh</code>, i
 </span></span><span class="line"><span class="cl"><span class="n">io</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </span></span></code></pre></div><p>Flag: <code>Breach{5h0uldv3_l1573n3d_70_7h3_6cc_w4rn1n65}</code></p>
 <h2 id="pwnmagicvault">pwn/MagicVault</h2>
-<p>I quite enjoy this challenge, for while it is conceptually simple, it was well disguised within a unique context compared to a typical CRUD binary.</p>
-<h3 id="analysis">Analysis</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/magicvault$ checksec main
+<p>I quite enjoyed this challenge, for while it is conceptually simple, it was well disguised within a unique context compared to a typical CRUD binary.</p>
+<h3 id="analysis-1">Analysis</h3>
+
+
+
+    <blockquote class="alert alert-tip">
+        <p class="alert-heading">
+            💡
+            <b>
+                
+                    Files given
+                
+            </b>
+        </p>
+        <p><a href="magicvault/main">main</a>, <a href="magicvault/main.c">main.c</a>, <a href="magicvault/magic_buddy.c">magic_buddy.c</a>, <a href="magicvault/magic_buddy.h">magic_buddy.h</a></p>
+    </blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ctfplayer@enxgmatic:~/breachers/magicvault$ checksec main
 </span></span><span class="line"><span class="cl"><span class="o">[</span>*<span class="o">]</span> <span class="s1">&#39;/home/ctfplayer/breachers/magicvault/main&#39;</span>
 </span></span><span class="line"><span class="cl">    Arch:     amd64-64-little
 </span></span><span class="line"><span class="cl">    RELRO:    Partial RELRO
 </span></span><span class="line"><span class="cl">    Stack:    Canary found
 </span></span><span class="line"><span class="cl">    NX:       NX enabled
 </span></span><span class="line"><span class="cl">    PIE:      No PIE <span class="o">(</span>0x400000<span class="o">)</span>
-</span></span></code></pre></div><p>Apart from the binary, we are given 3 files: <code>magic_buddy.c</code>, <code>magic_buddy.h</code> and <code>main.c</code>.</p>
-<h3 id="analysis---magic_buddy">Analysis - magic_buddy</h3>
+</span></span></code></pre></div><h3 id="analysis---magic_buddy">Analysis - magic_buddy</h3>
 <p><code>magic_buddy</code> is an implementation of the buddy memory allocation system. It splits memory into halves to determine the best fit i.e. it uses the memory block size 2<sup>m</sup> which satisfies 2<sup>m-1</sup> &lt; requested size &lt;= 2<sup>m</sup>.</p>
 <p>No deep knowledge about the buddy system is actually needed, and most of the code in it is irrelevant to the exploit.</p>
 <p>To give a brief overview, <code>init_buddy</code> initialises the buddy memory allocator, which is of the following struct. It includes an array of pointers to freed blocks (<code>avail</code>), the starting memory address where blocks will be allocated to (<code>base</code>), and its largest block size (<code>root_logsize</code>).</p>
